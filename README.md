@@ -1,4 +1,3 @@
-OMS
-===
+# OMS_demo_app
 
-Ordering Management System
+a [Sails](http://sailsjs.org) application
