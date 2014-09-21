@@ -29,13 +29,58 @@
     -->
 
     <!--STYLES-->
+    <link rel="stylesheet" href="/styles/bootstrap/bootstrap-theme.css">
+    <link rel="stylesheet" href="/styles/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="/styles/application.css">
+    <link rel="stylesheet" href="/styles/importer.css">
     <!--STYLES END-->
   </head>
 
   <body>
+  
+  <div class="navbar navbar-inverse">
+			<div class="container">
+				<a class="navbar-brand" href="/">Home</a>
+				<% if (!req.session.current_user) { %>
+				<a class="navbar-brand pull-right" href="/login">Login</a>
+				<a class="navbar-brand pull-right" href="/userexamples/new">Sign-up</a>
+				<% } %>
+			</div>
+		</div>
+
+		<div id="flash_messages" class="text-center">
+			<% if (req.session.flash) { %>
+			<% if (req.session.flash.errors) { %>
+			<ul class="alert alert-danger text-center" style="width:50em;">
+				<li>
+					<%- JSON.stringify(req.session.flash.errors) %>
+				</li>
+			</ul>
+			<% req.session.flash = {} %>
+			<% } %>
+			<% if (req.session.flash.success) { %>
+			<ul class="alert alert-success text-center" style="width:50em;">
+				<li>
+					<%- JSON.stringify(req.session.flash.success) %>
+				</li>
+			</ul>
+			<% req.session.flash = {} %>
+			<% } %>
+			<% } %>
+		</div>
+  
     <%- body %>
 
-
+		<hr>
+		<div class="container">
+			<footer class="footer">
+				<div class="text-center">
+					<p style="color: grey;">
+						<strong><i>Ovo je footer text.</i></strong>
+					</p>
+				</div>
+			</footer>
+		</div>
 
     <!--
         Client-side Templates
@@ -59,6 +104,7 @@
     -->
 
     <!--TEMPLATES-->
+    
     <!--TEMPLATES END-->
 
 
@@ -86,6 +132,11 @@
     -->
 
     <!--SCRIPTS-->
+    <script src="/js/dependencies/sails.io.js"></script>
+    <script src="/js/jQuery/jquery-1.11.1.min.js"></script>
+    <script src="/js/jQuery/jquery.validate.min.js"></script>
+    <script src="/js/bootstrap/bootstrap.js"></script>
+    <script src="/js/userValidation.js"></script>
     <!--SCRIPTS END-->
   </body>
 </html>
