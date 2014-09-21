@@ -2,7 +2,7 @@
   "name": "OMS_demo_app",
   "private": true,
   "version": "0.0.0",
-  "description": "Order Management System - DEMO/PROTOTYPE/LITE version",
+  "description": "a Sails application",
   "keywords": [],
   "dependencies": {
     "sails": "~0.10.4",
@@ -30,8 +30,8 @@
   "main": "app.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/vojab/OMS.git"
+    "url": "git://github.com/matejci/OMS_demo_app.git"
   },
-  "author": "vojab, matejci, sanidsa",
+  "author": "matejci",
   "license": ""
 }
