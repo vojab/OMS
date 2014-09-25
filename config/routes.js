@@ -39,6 +39,11 @@ module.exports.routes = {
   "/login": {
   	view: "login"
   },
+  
+  //Staff
+  "GET /admin/staff" : "admin/staff.index",
+  "GET /admin/staff/new" : {controller: "admin/staff", action: "new" },
+  "POST /admin/staff/create" : "admin/staffController.create", 
 
   /***************************************************************************
   *                                                                          *
