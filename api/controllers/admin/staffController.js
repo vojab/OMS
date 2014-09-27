@@ -13,13 +13,19 @@ module.exports = {
 		res.view();
 	},
 	
-	"create" : function(req, res){		
+	"create" : function(req, res){	
+		
+		if (req.body.password != req.body.passwordConfirmation){
+			req.flash("errors", "Password doesn't match Password Confirmation.");
+			res.redirect("admin/staff/new");
+		}
+			
 		staff.create({
 			id : helperService.createGUID(),
 			firstName : req.body.firstName,
 			lastName : req.body.lastName,
 			email : req.body.email,
-			encrypted_password : req.body.password //todo -> add encryption
+			encryptedPassword : req.body.password
 			//todo -> fix fuckedup dates in collection... schema thing (!?!?!)			
 		}).exec(function(error, user) {
 			if (error) {							
