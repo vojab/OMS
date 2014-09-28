@@ -1,34 +1,129 @@
 <div class="title">
-	<h2 class="form-signin-heading">Create an account</h2>
+	<h2 class="form-signin-heading">Add staff member</h2>
 </div>
+<br/>
 
-<form action="/admin/staff/create" method="POST" class="form-signin form_left_margin">
-	
-	<br/>
+<form action="/admin/staff/create" method="POST" class="form-signin">
 
-	<table>
-		<tr>
-			<td class="td_spacing"><input type="text" class="form-control" placeholder="First Name" name="firstName" /></td>
-		</tr>
-		<tr>
-			<td class="td_spacing"><input type="text" class="form-control" placeholder="Last Name" name="lastName" /></td>
-		</tr>		
-		<tr>
-			<td class="td_spacing"><input type="text" class="form-control" placeholder="Email" name="email" /></td>			
-		</tr>
-		<tr>
-			<td class="td_spacing"><input id="password" type="password" class="form-control" placeholder="Password" name="password" /></td>			
-		</tr>
-		<tr>
-			<td class="td_spacing"><input type="password" class="form-control" placeholder="Password confirmation" name="passwordConfirmation" /></td>			
-		</tr>		
-		<tr>
-			<td class="td_spacing text-center">
-				<input type="submit" class="btn btn-sm btn-success" value="Create user" />
-			</td>
-		</tr>
-	</table>
-	
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+			<ul id="staffTab" class="nav nav-tabs">
+				<li class="active">
+					<a href="#basicInfo" data-toggle="tab">Basic Info</a>
+				</li>
+				<li>
+					<a href="#contactInfo" data-toggle="tab">Contact Info</a>
+				</li>
+				<li>
+					<a href="#otherInfo" data-toggle="tab">Other Info</a>
+				</li>
+			</ul>
+
+			<div id="staffTabContent" class="tab-content">
+
+				<div class="tab-pane fade active in" id="basicInfo">
+					<br/>
+
+					<div class="form-group col-sm-12">
+						<label for="email">Email:</label>
+						<input id="email" type="email" class="form-control" placeholder="Email" name="email" />
+					</div>
+
+					<div class="form-group col-md-6 col-sm-6">
+						<label for="firstName">First Name:</label>
+						<input id="firstName" type="text" class="form-control" placeholder="First Name" name="firstName" />
+					</div>
+
+					<div class="form-group col-md-6 col-sm-6">
+						<label for="lastName">Last Name:</label>
+						<input id="lastName" type="text" class="form-control" placeholder="Last Name" name="lastName" />
+					</div>
+
+					<div class="form-group col-md-6 col-sm-6">
+						<label for="password">Password:</label>
+						<input id="password" type="password" class="form-control" placeholder="Password" name="password" />
+					</div>
+
+					<div class="form-group col-md-6 col-sm-6">
+						<label for="passwordConfirmation">Password confirmation:</label>
+						<input id="passwordConfirmation" type="password" class="form-control" placeholder="Password confirmation" name="passwordConfirmation" />
+					</div>
+
+					<div class="form-group col-md-6 col-sm-6">
+						<label for="birthDate">Birth Date:</label>
+						<input id="birthDate" type="date" class="form-control" placeholder="Birth date (format: YYYY-mm-dd)" name="birthDate" />
+					</div>
+
+					<div class="form-group col-md-6 col-sm-6">
+						<label for="placeOfBirth">Place of birth:</label>
+						<input id="placeOfBirth" type="text" class="form-control" placeholder="Place of birth" name="placeOfBirth" />
+					</div>
+
+				</div>
+
+				<div class="tab-pane fade in" id="contactInfo">
+					<br/>
+
+					<div class="form-group col-md-6 col-sm-6">
+						<label for="address">Address:</label>
+						<input id="address" type="text" class="form-control" placeholder="Address" name="address" />
+					</div>
+					<div class="form-group col-md-6 col-sm-6">
+						<label for="zipCode">Zip code:</label>
+						<input id="zipCode" type="text" class="form-control" placeholder="Zip code" name="zipCode" />
+					</div>
+
+					<div class="form-group col-md-6 col-sm-6">
+						<label for="city">City:</label>
+						<input id="city" type="text" class="form-control" placeholder="City" name="city" />
+					</div>
+					<div class="form-group col-md-6 col-sm-6">
+						<label for="country">Country:</label>
+						<input id="country" type="text" class="form-control" placeholder="Country" name="country" />
+					</div>
+
+					<div class="form-group col-md-6 col-sm-6">
+						<label for="phoneNumber1">Phone number 1:</label>
+						<input id="phoneNumber1" type="tel" class="form-control" pattern="^[0-9\-\+]{9,15}$" placeholder="Phone number 1" name="phoneNumber1" />
+					</div>
+					<div class="form-group col-md-6 col-sm-6">
+						<label for="phoneNumber2">Phone number 2:</label>
+						<input id="phoneNumber2" type="tel" pattern="^[0-9\-\+]{9,15}$" class="form-control" placeholder="Phone number 2" name="phoneNumber2" />
+					</div>
+				</div>
+
+				<div class="tab-pane fade in" id="otherInfo">
+					<br/>
+
+					<div class="form-group col-md-6 col-sm-6">
+						<label for="jobTitle">Job title:</label>
+						<input id="jobTitle" type="text" class="form-control" placeholder="Job title" name="jobTitle" />
+					</div>
+					<div class="form-group col-md-6 col-sm-6">
+						<label for="salary">Salary:</label>
+						<input id="salary" type="number" class="form-control" min="0" max="100000" step="5" placeholder="Salary" name="salary" />
+					</div>
+					<div class="form-group col-md-6 col-sm-6">
+						<label for="isAdmin">Is admin:</label>
+						<input id="isAdmin" type="checkbox" name="isAdmin" />
+					</div>
+
+					<div class="form-group col-md-6 col-sm-6">
+						<label for="hireDate">Hire date:</label>
+						<input id="hireDate" type="date" class="form-control" placeholder="Hire date (format: YYYY-mm-dd)" name="hireDate" />
+					</div>
+				</div>
+			</div>
+			<br/>
+			<br/>
+
+			<div class="form-group col-sm-6">
+				<input type="submit" class="btn btn-sm btn-success" value="Create member" />
+			</div>
+
+		</div>
+	</div>
+
 	<input type="hidden" name="_csrf" value="<%= _csrf %>" />
 
 </form>

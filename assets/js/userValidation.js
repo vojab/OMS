@@ -16,13 +16,13 @@ $(document).ready(function() {
 				required : true,
 				minlength : 3,
 			},
-			password_confirmation : {
+			passwordConfirmation : {
 				required : true,
 				equalTo : "#password"
 			}
 		},
 		messages : {
-			password_confirmation : "Must match 'password' field"
+			passwordConfirmation : "Must match 'password' field"
 		},
 		success : function(element){
 			element.addClass("valid");

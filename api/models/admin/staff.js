@@ -4,27 +4,28 @@ module.exports = {
 
 	attributes : {
 
-		id : {
-			type : "string"
-		},
-		firstName : {
-			type : "string",
-			required : true
-		},
-		lastName : {
-			type : "string",
-			required : true
-		},
-		email : {
-			type : "string",
-			email : true,
-			unique : true,
-			required : true
-		},
-		encryptedPassword : {
-			type : "string",
-			required : true
-		}
+		//basic
+		id : { type : "string" },
+		firstName : { type : "string", required : true 	},
+		lastName : { type : "string", required : true },
+		email : { type : "string", email : true, unique : true, required : true },
+		encryptedPassword : { type : "string", required : true },
+		birthDate : { type : "date" },
+		placeOfBirth : { type : "string" },
+		
+		//contact
+		address : { type : "string" },
+		zipCode : { type : "string" },
+		city : { type : "string" },
+		country : { type : "string" },
+		phoneNumber1 : { type : "string"},
+		phoneNumber2 : { type : "string"},
+		
+		//other
+		is_admin : { type : "boolean" },
+		hireDate : { type : "date" },
+		title : { type : "string"},
+		salary : { type : "float" }
 	},
 
 	//callbacks

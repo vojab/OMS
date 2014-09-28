@@ -22,7 +22,7 @@
 						<td><%= member.email %></td>
 						<td>
 							<%- link_to_if(true, "Delete", "/admin/staff/" + member.id, {method : "delete", class: "btn btn-sm btn-danger"}) %>
-						    <%- link_to_if(true, "Edit", "/admin/staff/" + member.id, {class: "btn btn-sm btn-warning"}) %>
+						    <%- link_to_if(true, "Edit", "/admin/staff/" + member.id + "/edit", {class: "btn btn-sm btn-warning"}) %>
 						</td>
 					</tr>
 					<% }); %>
