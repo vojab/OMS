@@ -1,163 +1,97 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>New Sails App</title>
+	<head>
+		<title>Ordering Management System DEMO</title>
 
-    <!-- Viewport mobile tag for sensible mobile support -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<!-- Viewport mobile tag for sensible mobile support -->
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    
-    <!--  
-        Stylesheets and Preprocessors
-        ==============================
+		<!--STYLES-->
+<link rel="stylesheet" href="/styles/bootstrap/bootstrap-theme.css">
+<link rel="stylesheet" href="/styles/bootstrap/bootstrap.css">
+<link rel="stylesheet" href="/styles/application.css">
+<link rel="stylesheet" href="/styles/importer.css">
+<!--STYLES END-->
 
-        You can always bring in CSS files manually with `<link>` tags, or asynchronously
-        using a solution like AMD (RequireJS).  Or, if you like, you can take advantage 
-        of Sails' conventional asset pipeline (boilerplate Gruntfile).
+		<!--SCRIPTS-->
+<script src="/js/dependencies/sails.io.js"></script>
+<script src="/js/jQuery/jquery-1.11.1.min.js"></script>
+<script src="/js/jQuery/jquery.validate.min.js"></script>
+<script src="/js/bootstrap/bootstrap.js"></script>
+<script src="/js/userValidation.js"></script>
+<!--SCRIPTS END-->
 
-        By default, stylesheets from your `assets/styles` folder are included
-        here automatically (between STYLES and STYLES END). Both CSS (.css) and LESS (.less)
-        are supported. In production, your styles will be minified and concatenated into
-        a single file.
-        
-        To customize any part of the built-in behavior, just edit `tasks/pipeline.js`.
-        For example, here are a few things you could do:
-            
-            + Change the order of your CSS files
-            + Import stylesheets from other directories
-            + Use a different or additional preprocessor, like SASS, SCSS or Stylus
-    -->
+	</head>
 
-    <!--STYLES-->
-    <link rel="stylesheet" href="/styles/bootstrap/bootstrap-theme.css">
-    <link rel="stylesheet" href="/styles/bootstrap/bootstrap.css">
-    <link rel="stylesheet" href="/styles/application.css">
-    <link rel="stylesheet" href="/styles/importer.css">
-    <!--STYLES END-->
-  </head>
+	<body>
 
-  <body>
-  
-  
-  <div class="navbar navbar-inverse">
-			<div class="container">
-			<ul>
-			
-				<a class="navbar-brand" href="/">Home</a>
-				<li class="dropdown">
-					<a href="#" data-toggle="dropdown" class="navbar-brand dropdown-toggle">Staff <b class="caret"></b></a>
-					<ul class="dropdown-menu">
+		<div id="header">
+			<div class="navbar navbar-inverse">
+				<div class="container">
+					<ul>
+						<a class="navbar-brand" href="/">Home</a>
 						<li class="dropdown">
-							<a href="/admin/staff/new">add</a>
+							<a href="#" data-toggle="dropdown" class="navbar-brand dropdown-toggle">Staff <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li class="dropdown">
+									<a href="/admin/staff">All</a>
+								</li>
+								<li class="divider"></li>
+								<li class="dropdown">
+									<a href="/admin/staff/new">New staff member</a>
+								</li>
+								<li class="divider"></li>
+								<li class="dropdown">
+									<a href=""></a>
+								</li>
+							</ul>
 						</li>
-						<li class="divider"></li>
-						<li class="dropdown">
-							<a href="/admin/staff/:id/edit">edit</a>
-						</li>					
-						<li class="divider"></li>
-						<li class="dropdown">
-							<a href="/admin/staff/:id/delete">delete</a>
-						</li>					
+						<% if (!req.session.current_user) { %>
+						<a class="navbar-brand pull-right" href="/login">Login</a>
+						<a class="navbar-brand pull-right" href="/userexamples/new">Sign-up</a>
+						<% } %>
 					</ul>
-				</li>				
-			
-				<% if (!req.session.current_user) { %>
-				<a class="navbar-brand pull-right" href="/login">Login</a>
-				<a class="navbar-brand pull-right" href="/userexamples/new">Sign-up</a>
+				</div>
+			</div>
+
+			<div id="flash_messages" class="text-center">
+				<% if (req.session.flash) { %>
+				<% if (req.session.flash.errors) { %>
+				<ul class="alert alert-danger text-center" style="width:50em;">
+					<li>
+						<%- JSON.stringify(req.session.flash.errors) %>
+					</li>
+				</ul>
+				<% req.session.flash = {} %>
 				<% } %>
-			</ul>
+				<% if (req.session.flash.success) { %>
+				<ul class="alert alert-success text-center" style="width:50em;">
+					<li>
+						<%- JSON.stringify(req.session.flash.success) %>
+					</li>
+				</ul>
+				<% req.session.flash = {} %>
+				<% } %>
+				<% } %>
 			</div>
 		</div>
 
-		<div id="flash_messages" class="text-center">
-			<% if (req.session.flash) { %>
-			<% if (req.session.flash.errors) { %>
-			<ul class="alert alert-danger text-center" style="width:50em;">
-				<li>
-					<%- JSON.stringify(req.session.flash.errors) %>
-				</li>
-			</ul>
-			<% req.session.flash = {} %>
-			<% } %>
-			<% if (req.session.flash.success) { %>
-			<ul class="alert alert-success text-center" style="width:50em;">
-				<li>
-					<%- JSON.stringify(req.session.flash.success) %>
-				</li>
-			</ul>
-			<% req.session.flash = {} %>
-			<% } %>
-			<% } %>
+		<div id="body">
+			<%- body %>
 		</div>
-  
-    <%- body %>
 
-		<hr>
-		<div class="container">
-			<footer class="footer">
-				<div class="text-center">
-					<p style="color: grey;">
-						<strong><i>Ovo je footer text.</i></strong>
-					</p>
-				</div>
+		<div id="footer">
+			<footer>
+				<p class="pull-right">
+					<a href="#header"> <img class="btn-img" src="/images/back_to_top.png" alt="go up"> </a>
+				</p>
+				<p style="color: black; font-weight: bold;" class="text-center">
+					&copy; 2014 Kurosawa-E Development Team | Patent Pending &middot;
+					<%- link_to("Privacy", "add-later") %> &middot;
+					<%- link_to("Terms and conditions", "add-later") %>
+				</p>
 			</footer>
 		</div>
 
-    <!--
-        Client-side Templates
-        ========================
-
-        HTML templates are important prerequisites of modern, rich client applications.
-        To work their magic, frameworks like Backbone, Angular, Ember, and Knockout require
-        that you load these templates client-side.
-
-        By default, your Gruntfile is configured to automatically load and precompile
-        client-side JST templates in your `assets/templates` folder, then
-        include them here automatically (between TEMPLATES and TEMPLATES END).
-        
-        To customize this behavior to fit your needs, just edit `tasks/pipeline.js`.
-        For example, here are a few things you could do:
-
-            + Import templates from other directories
-            + Use a different template engine (handlebars, jade, dust, etc.)
-            + Internationalize your client-side templates using a server-side
-              stringfile before they're served.
-    -->
-
-    <!--TEMPLATES-->
-    
-    <!--TEMPLATES END-->
-
-
-    <!--
-
-      Client-side Javascript
-      ========================
-
-      You can always bring in JS files manually with `script` tags, or asynchronously
-      on the client using a solution like AMD (RequireJS).  Or, if you like, you can 
-      take advantage of Sails' conventional asset pipeline (boilerplate Gruntfile).
-
-      By default, files in your `assets/js` folder are included here
-      automatically (between SCRIPTS and SCRIPTS END).  Both JavaScript (.js) and
-      CoffeeScript (.coffee) are supported. In production, your scripts will be minified
-      and concatenated into a single file.
-      
-      To customize any part of the built-in behavior, just edit `tasks/pipeline.js`.
-      For example, here are a few things you could do:
-          
-          + Change the order of your scripts
-          + Import scripts from other directories
-          + Use a different preprocessor, like TypeScript
-
-    -->
-
-    <!--SCRIPTS-->
-    <script src="/js/dependencies/sails.io.js"></script>
-    <script src="/js/jQuery/jquery-1.11.1.min.js"></script>
-    <script src="/js/jQuery/jquery.validate.min.js"></script>
-    <script src="/js/bootstrap/bootstrap.js"></script>
-    <script src="/js/userValidation.js"></script>
-    <!--SCRIPTS END-->
-  </body>
+	</body>
 </html>

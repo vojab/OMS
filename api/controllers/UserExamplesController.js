@@ -1,6 +1,3 @@
-
-var GUID_helper = require("../helpers/GUID.js");
-
 module.exports = {
 	
 	"index" : function(req, res){
@@ -14,7 +11,7 @@ module.exports = {
 	"create" : function(req, res) {
 		
 		UserExample.create({
-			id : GUID_helper.createGuid(),
+			id : helperService.createGUID(),
 			firstName : req.body.firstName,
 			lastName : req.body.lastName,
 			email : req.body.email,
