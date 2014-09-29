@@ -34,10 +34,12 @@
 			<div id="header">
 				<div class="navbar navbar-inverse">
 					<div class="container">
-						<ul>
-							<a class="navbar-brand" href="/">Home</a>
+						<ul class="nav navbar-nav">
+							<li>
+								<a class="" href="/">Home</a>
+							</li>
 							<li class="dropdown">
-								<a href="#" data-toggle="dropdown" class="navbar-brand dropdown-toggle">Staff <b class="caret"></b></a>
+								<a href="#" data-toggle="dropdown" class="dropdown-toggle">Staff <b class="caret"></b></a>
 								<ul class="dropdown-menu">
 									<li class="dropdown">
 										<a href="/admin/staff">All</a>
@@ -46,17 +48,20 @@
 									<li class="dropdown">
 										<a href="/admin/staff/new">New staff member</a>
 									</li>
-									<li class="divider"></li>
-									<li class="dropdown">
-										<a href=""></a>
-									</li>
 								</ul>
 							</li>
-							<% if (!req.session.current_user) { %>
-							<a class="navbar-brand pull-right" href="/login">Login</a>
-							<a class="navbar-brand pull-right" href="/userexamples/new">Sign-up</a>
-							<% } %>
 						</ul>
+						<% if (!req.session.current_user) { %>
+						<ul class="navbar-nav nav pull-right">
+							<li>
+								<a href="/login">Login</a>
+							</li>
+							<li>
+								<a href="/userexamples/new">Sign-up</a>
+							</li>
+						</ul>
+						<% } %>
+
 					</div>
 				</div>
 

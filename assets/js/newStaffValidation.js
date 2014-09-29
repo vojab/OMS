@@ -36,6 +36,24 @@ $(document).ready(function() {
 			},
 			hireDate : {
 				checkDate: true
+			},
+			zipCode : {
+				number : true,
+				minlength: 5,
+				maxlength: 5
+			},
+			phoneNumber1 : {
+				number: true,
+				minlength: 9,
+				maxlength: 14
+			},
+			phoneNumber2 : {
+				number : true,
+				minlength: 9,
+				maxlength: 14
+			},
+			salary : {
+				number : true
 			}
 		},
 		messages : {

@@ -15,17 +15,17 @@ module.exports = {
 		
 		//contact
 		address : { type : "string" },
-		zipCode : { type : "string" },
+		zipCode : { type : "integer", defaultsTo: 0 }, 
 		city : { type : "string" },
 		country : { type : "string" },
 		phoneNumber1 : { type : "string"},
 		phoneNumber2 : { type : "string"},
 		
 		//other
-		is_admin : { type : "boolean" },
+		isAdmin : { type : "boolean", defaultsTo: false },
 		hireDate : { type : "date" },
-		title : { type : "string"},
-		salary : { type : "float" }
+		jobTitle : { type : "string"},
+		salary : { type : "float", defaultsTo: 0 }
 	},
 
 	//callbacks
