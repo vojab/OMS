@@ -9,6 +9,9 @@
 		<!--STYLES-->
 <link rel="stylesheet" href="/styles/bootstrap/bootstrap-theme.css">
 <link rel="stylesheet" href="/styles/bootstrap/bootstrap.css">
+<link rel="stylesheet" href="/styles/jqueryUI/jquery-ui.css">
+<link rel="stylesheet" href="/styles/jqueryUI/jquery-ui.structure.css">
+<link rel="stylesheet" href="/styles/jqueryUI/jquery-ui.theme.css">
 <link rel="stylesheet" href="/styles/application.css">
 <link rel="stylesheet" href="/styles/importer.css">
 <!--STYLES END-->
@@ -16,82 +19,85 @@
 		<!--SCRIPTS-->
 <script src="/js/dependencies/sails.io.js"></script>
 <script src="/js/jQuery/jquery-1.11.1.min.js"></script>
+<script src="/js/jQuery/jquery-ui.js"></script>
 <script src="/js/jQuery/jquery.validate.min.js"></script>
 <script src="/js/bootstrap/bootstrap.js"></script>
-<script src="/js/userValidation.js"></script>
+<script src="/js/newStaff.js"></script>
+<script src="/js/newStaffValidation.js"></script>
 <!--SCRIPTS END-->
 
 	</head>
 
 	<body>
 
-		<div id="header">
-			<div class="navbar navbar-inverse">
-				<div class="container">
-					<ul>
-						<a class="navbar-brand" href="/">Home</a>
-						<li class="dropdown">
-							<a href="#" data-toggle="dropdown" class="navbar-brand dropdown-toggle">Staff <b class="caret"></b></a>
-							<ul class="dropdown-menu">
-								<li class="dropdown">
-									<a href="/admin/staff">All</a>
-								</li>
-								<li class="divider"></li>
-								<li class="dropdown">
-									<a href="/admin/staff/new">New staff member</a>
-								</li>
-								<li class="divider"></li>
-								<li class="dropdown">
-									<a href=""></a>
-								</li>
-							</ul>
+		<div id="mainContainer">
+			<div id="header">
+				<div class="navbar navbar-inverse">
+					<div class="container">
+						<ul>
+							<a class="navbar-brand" href="/">Home</a>
+							<li class="dropdown">
+								<a href="#" data-toggle="dropdown" class="navbar-brand dropdown-toggle">Staff <b class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li class="dropdown">
+										<a href="/admin/staff">All</a>
+									</li>
+									<li class="divider"></li>
+									<li class="dropdown">
+										<a href="/admin/staff/new">New staff member</a>
+									</li>
+									<li class="divider"></li>
+									<li class="dropdown">
+										<a href=""></a>
+									</li>
+								</ul>
+							</li>
+							<% if (!req.session.current_user) { %>
+							<a class="navbar-brand pull-right" href="/login">Login</a>
+							<a class="navbar-brand pull-right" href="/userexamples/new">Sign-up</a>
+							<% } %>
+						</ul>
+					</div>
+				</div>
+
+				<div id="flash_messages" class="text-center">
+					<% if (req.session.flash) { %>
+					<% if (req.session.flash.errors) { %>
+					<ul class="alert alert-danger text-center" style="width:50em;">
+						<li>
+							<%- JSON.stringify(req.session.flash.errors) %>
 						</li>
-						<% if (!req.session.current_user) { %>
-						<a class="navbar-brand pull-right" href="/login">Login</a>
-						<a class="navbar-brand pull-right" href="/userexamples/new">Sign-up</a>
-						<% } %>
 					</ul>
+					<% req.session.flash = {} %>
+					<% } %>
+					<% if (req.session.flash.success) { %>
+					<ul class="alert alert-success text-center" style="width:50em;">
+						<li>
+							<%- JSON.stringify(req.session.flash.success) %>
+						</li>
+					</ul>
+					<% req.session.flash = {} %>
+					<% } %>
+					<% } %>
 				</div>
 			</div>
 
-			<div id="flash_messages" class="text-center">
-				<% if (req.session.flash) { %>
-				<% if (req.session.flash.errors) { %>
-				<ul class="alert alert-danger text-center" style="width:50em;">
-					<li>
-						<%- JSON.stringify(req.session.flash.errors) %>
-					</li>
-				</ul>
-				<% req.session.flash = {} %>
-				<% } %>
-				<% if (req.session.flash.success) { %>
-				<ul class="alert alert-success text-center" style="width:50em;">
-					<li>
-						<%- JSON.stringify(req.session.flash.success) %>
-					</li>
-				</ul>
-				<% req.session.flash = {} %>
-				<% } %>
-				<% } %>
+			<div id="pageContent">
+				<%- body %>
+			</div>
+
+			<div id="footer">
+				<footer>
+					<p class="pull-right" style="margin-right: 1em;">
+						<a href="#header"> <img class="btn-img" src="/images/back_to_top.png" alt="go up"> </a>
+					</p>
+					<p style="color: black; font-weight: bold; padding-top: 0.5em;" class="text-center">
+						&copy; 2014 Kurosawa-E Development Team | Patent Pending &middot;
+						<%- link_to("Privacy", "add-later") %> &middot;
+						<%- link_to("Terms and conditions", "add-later") %>
+					</p>
+				</footer>
 			</div>
 		</div>
-
-		<div id="body">
-			<%- body %>
-		</div>
-
-		<div id="footer">
-			<footer>
-				<p class="pull-right">
-					<a href="#header"> <img class="btn-img" src="/images/back_to_top.png" alt="go up"> </a>
-				</p>
-				<p style="color: black; font-weight: bold;" class="text-center">
-					&copy; 2014 Kurosawa-E Development Team | Patent Pending &middot;
-					<%- link_to("Privacy", "add-later") %> &middot;
-					<%- link_to("Terms and conditions", "add-later") %>
-				</p>
-			</footer>
-		</div>
-
 	</body>
 </html>

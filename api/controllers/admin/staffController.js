@@ -24,6 +24,8 @@ module.exports = {
 	},
 
 	"create" : function(req, res) {
+		
+		console.log("REQ.body ", req.body);
 
 		if (req.body.password != req.body.passwordConfirmation) {
 			req.flash("errors", "Password doesn't match Password Confirmation.");
