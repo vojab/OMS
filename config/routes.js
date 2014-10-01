@@ -22,28 +22,31 @@
 
 module.exports.routes = {
 
-  /***************************************************************************
-  *                                                                          *
-  * Make the view located at `views/homepage.ejs` (or `views/homepage.jade`, *
-  * etc. depending on your default view engine) your home page.              *
-  *                                                                          *
-  * (Alternatively, remove this and add an `index.html` file in your         *
-  * `assets` directory)                                                      *
-  *                                                                          *
-  ***************************************************************************/
+	/***************************************************************************
+	 *                                                                          *
+	 * Make the view located at `views/homepage.ejs` (or `views/homepage.jade`, *
+	 * etc. depending on your default view engine) your home page.              *
+	 *                                                                          *
+	 * (Alternatively, remove this and add an `index.html` file in your         *
+	 * `assets` directory)                                                      *
+	 *                                                                          *
+	 ***************************************************************************/
 
- '/': {
-    view: 'index'
-  },
-  
-  "/login": {
-  	view: "login"
-  },
-  
-  //Staff
-  "GET /admin/staff" : "admin/staff.index",
-  "GET /admin/staff/new" : {controller: "admin/staff", action: "new" },
-  "POST /admin/staff/create" : "admin/staffController.create", 
+	'/' : {
+		view : 'index'
+	},
 
+	"/login" : {
+		view : "login"
+	},
+
+	// admin/staff
+	"GET /admin/staff/new" : { controller : "admin/staff", action : "new" },
+	"POST /admin/staff/create" : "admin/staffController.create",
+	"GET /admin/staff" : "admin/staff.index",
+	"GET /admin/staff/:id" : "admin/staff.show",
+	"DELETE /admin/staff/:id" : "admin/staff.destroy",
+	"GET /admin/staff/:id/edit" : "admin/staff.edit",
+	"POST /admin/staff/:id" : "admin/staff.update"
 
 };

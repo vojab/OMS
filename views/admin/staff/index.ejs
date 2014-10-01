@@ -1,3 +1,4 @@
+<% if (staffMembers.length > 0) {%>
 <div class="page-header">
 	<h2 style="padding-left: 2em;">Staff members</h2>
 </div>
@@ -8,27 +9,32 @@
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th>First name</th>
-						<th>Last name</th>
+						<th>Name</th>
 						<th>Email</th>
+						<th>Is admin</th>
 						<th>Actions</th>
 					</tr>
 				</thead>
 				<tbody>
 					<% staffMembers.forEach(function(member){ %>
 					<tr>
-						<td><%- link_to(member.firstName, "/admin/staff/" + member.id ) %></td>
-						<td><%= member.lastName %></td>
+						<td><%- link_to(member.firstName + " " + member.lastName, "/admin/staff/" + member.id ) %></td>
 						<td><%= member.email %></td>
-						<td>
-							<%- link_to_if(true, "Delete", "/admin/staff/" + member.id, {method : "delete", class: "btn btn-sm btn-danger"}) %>
-						    <%- link_to_if(true, "Edit", "/admin/staff/" + member.id + "/edit", {class: "btn btn-sm btn-warning"}) %>
-						</td>
+						<td><%= member.isAdmin ? "Yes" : "No" %></td>
+						<td> <%- link_to_if(true, "Edit", "/admin/staff/" + member.id + "/edit", {class: "btn btn-sm btn-warning"}) %> <a id="deleteStaffMember" data-member=<%=member.id %> class="btn btn-sm btn-danger">Delete</a></td>
 					</tr>
 					<% }); %>
 				</tbody>
 			</table>
 		</div>
 	</div>
+	<input id="csrf" type="hidden" name="_csrf" value="<%= _csrf %>" />
 </div>
-
+<% } else { %>
+<br/>
+<div class="container">
+	<div class="row">
+		<%- link_to_if(true, "Add staff member", "/admin/staff/new", {class: "btn btn-sm btn-success"}) %>
+	</div>
+</div>
+<% } %>
