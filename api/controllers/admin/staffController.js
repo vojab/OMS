@@ -15,7 +15,16 @@ module.exports = {
 	},
 
 	"show" : function(req, res) {
-		
+
+		staff.find({
+			id : req.param("id")
+		}, function(error, user) {
+			if (error || user.length == 0 ) {				
+				res.view("errors/genericError", { err : error, message : "Cannot find that user." });
+			} else {				
+				res.view({ member : user[0] });
+			}
+		});
 	},
 
 	"new" : function(req, res) {
@@ -70,7 +79,7 @@ module.exports = {
 	},
 
 	"update" : function(req, res) {
-		
+
 	},
 
 	"destroy" : function(req, res) {
@@ -78,13 +87,22 @@ module.exports = {
 		staff.destroy({
 			id : req.param("id")
 		}).exec(function(error, deletedUser) {
-			
-			if (error) {				
-				res.json({error : error, success: false, status : 304 });
+
+			if (error) {
+				res.json({
+					error : error,
+					success : false,
+					status : 304
+				});
 			} else {
-				res.json({username: deletedUser[0].firstName + " " + deletedUser[0].lastName, user_id: deletedUser[0].id, success: true, status : 200});				
+				res.json({
+					username : deletedUser[0].firstName + " " + deletedUser[0].lastName,
+					user_id : deletedUser[0].id,
+					success : true,
+					status : 200
+				});
 			}
-		});		
+		});
 	}
 };
 
