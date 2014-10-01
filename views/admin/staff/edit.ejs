@@ -1,0 +1,128 @@
+<div class="title">
+	<h2 class="form-signin-heading">Edit staff member :: <strong><%= member.firstName + " " + member.lastName %></strong></h2>
+</div>
+<br/>
+
+<form action="/admin/staff/update" method="POST" class="form-signin">
+
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+			<ul id="staffTab" class="nav nav-tabs">
+				<li class="active">
+					<a href="#basicInfo" data-toggle="tab">Basic Info</a>
+				</li>
+				<li>
+					<a href="#contactInfo" data-toggle="tab">Contact Info</a>
+				</li>
+				<li>
+					<a href="#otherInfo" data-toggle="tab">Other Info</a>
+				</li>
+			</ul>
+
+			<div id="staffTabContent" class="tab-content">
+
+				<div class="tab-pane fade active in" id="basicInfo">
+					<br/>
+
+					<div class="form-group col-sm-12">
+						<label for="email">Email:</label>
+						<%- text_field_tag("email", member.email, {class:"form-control", placeholder:"Email", name:"email"}) %>
+					</div>
+
+					<div class="form-group col-md-6 col-sm-6">
+						<label for="firstName">First Name:</label>
+						<%- text_field_tag("firstName", member.firstName, {class:"form-control", placeholder:"First Name", name:"firstName"}) %>
+					</div>
+
+					<div class="form-group col-md-6 col-sm-6">
+						<label for="lastName">Last Name:</label>
+						<%- text_field_tag("lastName", member.lastName, {class:"form-control", placeholder:"Email", name:"lastName"}) %>
+					</div>
+
+					<div class="form-group col-md-6 col-sm-6">
+						<label for="password">Password:</label>						
+						<%- password_field_tag("password", "",  {class:"form-control", placeholder:"Password", name:"Password"}) %>
+					</div>
+
+					<div class="form-group col-md-6 col-sm-6">
+						<label for="passwordConfirmation">Password confirmation:</label>
+						<%- password_field_tag("passwordConfirmation", "",  {class:"form-control", placeholder:"Password confirmation", name:"passwordConfirmation"}) %>
+					</div>
+
+					<div class="form-group col-md-6 col-sm-6">
+						<label for="DPbirthDate">Birth Date:</label>
+						<input id="DPbirthDate" type="date" class="form-control" placeholder="Birth date (format: (YYYY-mm-dd)" name="birthDate" />
+					</div>
+
+					<div class="form-group col-md-6 col-sm-6">
+						<label for="placeOfBirth">Place of birth:</label>
+						<%- text_field_tag("placeOfBirth", member.placeOfBirth, {class:"form-control", placeholder:"Place of birth", name:"placeOfBirth"}) %>
+					</div>
+
+				</div>
+
+				<div class="tab-pane fade in" id="contactInfo">
+					<br/>
+
+					<div class="form-group col-md-6 col-sm-6">
+						<label for="address">Address:</label>
+						<%- text_field_tag("address", member.address, {class:"form-control", placeholder:"Address", name:"address"}) %>
+					</div>
+					<div class="form-group col-md-6 col-sm-6">
+						<label for="zipCode">Zip code:</label>
+						<%- text_field_tag("zipCode", member.zipCode, {class:"form-control", placeholder:"Zip code", name:"zipCode"}) %>
+					</div>
+
+					<div class="form-group col-md-6 col-sm-6">
+						<label for="city">City:</label>
+						<%- text_field_tag("city", member.city, {class:"form-control", placeholder:"City", name:"city"}) %>
+					</div>
+					<div class="form-group col-md-6 col-sm-6">
+						<label for="country">Country:</label>
+						<%- text_field_tag("country", member.country, {class:"form-control", placeholder:"Country", name:"country"}) %>
+					</div>
+
+					<div class="form-group col-md-6 col-sm-6">
+						<label for="phoneNumber1">Phone number 1:</label>
+						<%- text_field_tag("phoneNumber1", member.phoneNumber1, {class:"form-control", placeholder:"Phone number 1", name:"phoneNumber1"}) %>
+					</div>
+					<div class="form-group col-md-6 col-sm-6">
+						<label for="phoneNumber2">Phone number 2:</label>
+						<%- text_field_tag("phoneNumber2", member.phoneNumber2, {class:"form-control", placeholder:"Phone number 2", name:"phoneNumber2"}) %>
+					</div>
+				</div>
+
+				<div class="tab-pane fade in" id="otherInfo">
+					<br/>
+
+					<div class="form-group col-md-6 col-sm-6">
+						<label for="jobTitle">Job title:</label>
+						<%- text_field_tag("jobTitle", member.jobTitle, {class:"form-control", placeholder:"Job title", name:"jobTitle"}) %>
+					</div>
+					<div class="form-group col-md-6 col-sm-6">
+						<label for="salary">Salary:</label>
+						<%- text_field_tag("salary", member.salary, {class:"form-control", placeholder:"Salary", name:"salary", type:"number", step:"5"}) %>
+					</div>
+					<div class="form-group col-md-6 col-sm-6">
+						<label for="isAdmin">Is admin:</label>
+						<input id="isAdmin" type="checkbox" name="isAdmin" <%- member.isAdmin ? "checked='true'" : "" %> />
+					</div>
+
+					<div class="form-group col-md-6 col-sm-6">
+						<label for="DPhireDate">Hire date:</label>
+						<input id="DPhireDate" type="date" class="form-control" placeholder="Hire date (format: YYYY-mm-dd)" name="hireDate" />
+					</div>
+				</div>
+			</div>
+			<br/>
+			<br/>
+
+			<div class="form-group col-md-12 col-sm-12">
+				<input type="submit" class="btn btn-sm btn-success" value="Update member" />
+			</div>
+		</div>
+	</div>
+	<input id="csrf" type="hidden" name="_csrf" value="<%= _csrf %>" />
+	<%- hidden_field_tag("member_id", member.id) %>
+
+</form>

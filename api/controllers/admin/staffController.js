@@ -19,10 +19,15 @@ module.exports = {
 		staff.find({
 			id : req.param("id")
 		}, function(error, user) {
-			if (error || user.length == 0 ) {				
-				res.view("errors/genericError", { err : error, message : "Cannot find that user." });
-			} else {				
-				res.view({ member : user[0] });
+			if (error || user.length == 0) {
+				res.view("errors/genericError", {
+					err : error,
+					message : "Cannot find that user."
+				});
+			} else {
+				res.view({
+					member : user[0]
+				});
 			}
 		});
 	},
@@ -76,10 +81,57 @@ module.exports = {
 
 	"edit" : function(req, res) {
 
+		sails.controllers["admin/staff"].show(req, res);
+
+		// staff.find({
+		// id : req.param("id")
+		// }, function(error, user) {
+		// if (error || user.length == 0 ) {
+		// res.view("errors/genericError", { err : error, message : "Cannot find that user." });
+		// } else {
+		// res.view({ member : user[0] });
+		// }
+		// });
 	},
 
 	"update" : function(req, res) {
 
+		staff.update({
+			id : req.body.member_id
+		}, {
+
+			//basic info
+			firstName : req.body.firstName,
+			lastName : req.body.lastName,
+			email : req.body.email,
+			//encryptedPassword : req.body.password, //todo -> include password in update
+			birthDate : req.body.birthDate,
+			placeOfBirth : req.body.placeOfBirth,
+
+			//contact info
+			address : req.body.address,
+			zipCode : req.body.zipCode == "" ? 0 : req.body.zipCode,
+			city : req.body.city,
+			country : req.body.country,
+			phoneNumber1 : req.body.phoneNumber1,
+			phoneNumber2 : req.body.phoneNumber2,
+
+			//other info
+			isAdmin : req.body.isAdmin != undefined,
+			hireDate : req.body.hireDate,
+			jobTitle : req.body.jobTitle,
+			salary : req.body.salary == "" ? 0 : req.body.salary
+
+		}).exec(function(error, updated) {
+
+			if (error) {
+				req.flash("errors", error);
+				res.redirect("/admin/staff/" + req.body.member_id + "/edit");
+			} else {
+				req.flash("success", "Staff member successfully updated.");
+				res.redirect("/admin/staff");
+			}
+		});
 	},
 
 	"destroy" : function(req, res) {
@@ -103,6 +155,29 @@ module.exports = {
 				});
 			}
 		});
+	},
+
+	"getDates" : function(req, res) {
+		staff.find({
+			id : req.param("id")
+		}, function(error, user) {
+			if (error || user.length == 0) {
+				res.json({
+					err : error,
+					message : "Cannot find dates data.",
+					success : false,
+					status : 304 //change this status code to appropriate...
+				});
+			} else {
+				res.json({
+					success : true,
+					status : 200,
+					birthday : user[0].birthDate,
+					hireday : user[0].hireDate
+				});
+			}
+		});
+
 	}
 };
 

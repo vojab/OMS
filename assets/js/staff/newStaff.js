@@ -18,5 +18,6 @@ $(document).ready(function() {
 			$("#DPhireDate").valid();
 		}
 	});
+	
 
 });
