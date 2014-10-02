@@ -104,10 +104,8 @@ module.exports = {
 			firstName : req.body.firstName,
 			lastName : req.body.lastName,
 			email : req.body.email,
-			//encryptedPassword : req.body.password, //todo -> include password in update
 			birthDate : req.body.birthDate,
 			placeOfBirth : req.body.placeOfBirth,
-
 			//contact info
 			address : req.body.address,
 			zipCode : req.body.zipCode == "" ? 0 : req.body.zipCode,
@@ -127,7 +125,7 @@ module.exports = {
 			if (error) {
 				req.flash("errors", error);
 				res.redirect("/admin/staff/" + req.body.member_id + "/edit");
-			} else {
+			} else {				
 				req.flash("success", "Staff member successfully updated.");
 				res.redirect("/admin/staff");
 			}
