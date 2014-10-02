@@ -49,5 +49,6 @@ module.exports.routes = {
 	"GET /admin/staff/:id/edit" : "admin/staff.edit", 
 	"POST /admin/staff/update" : "admin/staff.update",
 	"GET /admin/staff/:id/getDates" : "admin/staff.getDates",
+	"GET /admin/staff/search" : "admin/staff.search"
 
 };

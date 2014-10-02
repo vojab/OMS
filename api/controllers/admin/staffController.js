@@ -125,7 +125,7 @@ module.exports = {
 			if (error) {
 				req.flash("errors", error);
 				res.redirect("/admin/staff/" + req.body.member_id + "/edit");
-			} else {				
+			} else {
 				req.flash("success", "Staff member successfully updated.");
 				res.redirect("/admin/staff");
 			}
@@ -176,6 +176,11 @@ module.exports = {
 			}
 		});
 
+	},
+
+	"search" : function(req, res) {
+		console.log("SEARCH VIEW")
+		res.view();
 	}
 };
 
