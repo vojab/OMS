@@ -18,7 +18,7 @@
 				<tbody>
 					<% staffMembers.forEach(function(member){ %>
 					<tr>
-						<td><%- link_to(member.firstName + " " + member.lastName, "/admin/staff/" + member.id ) %></td>
+						<td><%- link_to(member.firstName + " " + member.lastName, "/admin/staff/" + member.id + "/details") %></td>
 						<td><%= member.email %></td>
 						<td><%= member.isAdmin ? "Yes" : "No" %></td>
 						<td> <%- link_to_if(true, "Edit", "/admin/staff/" + member.id + "/edit", {class: "btn btn-sm btn-warning"}) %> <a id="deleteStaffMember" data-member=<%=member.id %> class="btn btn-sm btn-danger">Delete</a></td>

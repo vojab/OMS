@@ -15,7 +15,7 @@ module.exports = {
 	},
 
 	"show" : function(req, res) {
-
+		
 		staff.find({
 			id : req.param("id")
 		}, function(error, user) {
@@ -74,7 +74,7 @@ module.exports = {
 				res.redirect("/admin/staff/new");
 			} else {
 				req.flash("success", "Staff member successfully created.");
-				res.redirect("/admin/staff");
+				res.redirect("/admin/staff/index");
 			}
 		});
 	},
@@ -127,7 +127,7 @@ module.exports = {
 				res.redirect("/admin/staff/" + req.body.member_id + "/edit");
 			} else {
 				req.flash("success", "Staff member successfully updated.");
-				res.redirect("/admin/staff");
+				res.redirect("/admin/staff/index");
 			}
 		});
 	},
@@ -179,8 +179,30 @@ module.exports = {
 	},
 
 	"search" : function(req, res) {
-		console.log("SEARCH VIEW")
 		res.view();
+	},
+	
+	"searchResults" : function(req,res){
+		
+		var searchString = req.query.query + "%";
+		
+		//eventually, optimize this query
+		staff.find({ $or : [ 
+			{ like : { firstName: searchString } }, 
+			{ like : { lastName : searchString } },
+			{ like : { email : searchString } }]}, { firstName : 1, lastName : 1, email: 1, isAdmin : 1 }, function(error, result){
+			
+			if (error || result.length == 0){
+				res.json({
+					err : error, message : "Cannot find staff member.", success: false, 
+					status : 304 //(change status code)
+				});
+			} else{
+				res.json({
+					success: true, status : 200, members : result
+				});
+			}			
+		});		
 	}
 };
 
