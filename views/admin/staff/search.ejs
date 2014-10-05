@@ -1,0 +1,28 @@
+<div class="page-header">
+	<h2 style="padding-left: 2em;">Search staff members</h2>
+</div>
+
+<div class="row">
+	<div class="col-md-8 col-lg-offset-1">
+
+		<div class="form-group col-md-6 col-sm-6">
+			<input id="searchBox" type="text" placeholder="Search by name or email" class="form-control" />
+		</div>
+		<br/>
+		<br/>
+		<div class="form-group col-md-12 col-sm-12">
+			<%- link_to_if(true, "Back", "/admin/staff/index", {class: "btn btn-sm btn-primary"}) %>
+		</div>
+	</div>
+	<input id="csrf" type="hidden" name="_csrf" value="<%= _csrf %>" />
+</div>
+<br/>
+<br/>
+<div class="row">
+	<div class="col-md-8 col-lg-offset-1">
+		<div id="searchResults" class="form-group col-md-12 col-sm-12">
+			
+		</div>
+	</div>
+</div>
+

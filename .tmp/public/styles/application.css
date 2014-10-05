@@ -1,12 +1,64 @@
-
 .title {
-   margin-left: 2em;    
-  }
+	margin-left: 2em;
+}
 
 .form_left_margin {
-	margin-left: 4em;    
-  }
-  
+	margin-left: 4em;
+}
+
 .td_spacing {
-    padding-bottom: 0.5em;    
+	padding-bottom: 0.5em;
+}
+
+.table_spacing {
+ 	padding-right: 8em;
+    
   }
+
+/* STAY DOWN MDFKR!! */
+
+html, body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+}
+#mainContainer {
+	min-height: 100%;
+	position: relative;
+}
+#header {
+	padding: 0px;
+}
+#content {
+	padding: 10px;
+	padding-bottom: 70px; /* Height of the footer element */
+}
+#footer {
+	margin: 7em -2em -5em 0em;
+	width: 100%;
+	height: 50px;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	background: darkgreen;
+}
+
+.btn-img {
+	margin-top: 0.5em;
+	height: 32px;
+	width: 32px;
+}
+
+/* overriding jquery-validate class */
+.error {
+	color: red;
+	font-size: 12px;
+}
+
+.form-control.error {
+    color: black;    
+  }
+
+#flash_messages {
+	padding-left: 22em;
+}
