@@ -59,22 +59,22 @@ module.exports.connections = {
 
 	//comment-out when pushing on remote branch!
 	MongoDB_Server_remote : {
-		adapter : 'sails-mongo',
-		host : 'ds033400.mongolab.com',
+		adapter : "sails-mongo",
+		host : "ds033400.mongolab.com",
 		port : 33400,
-		user : 'admin',
-		password : '0101',
-		database : 'oms_demo_db'
+		user : "admin",
+		password : "0101",
+		database : "oms_demo_db"
 	},
 
 	//use while testing locally => comment before pushing on remote branch!
 	// MongoDB_Server_local : {
-	// adapter : 'sails-mongo',
-	// host : 'localhost',
-	// port : 27017,
-	// user : '',
-	// password : '',
-	// database : 'OMS-local'
+	// adapter : "sails-mongo",
+	// host : "localhost",
+	// port : "27017",
+	// user : "",
+	// password : "",
+	// database : "OMS-local"
 	// },
 
 	/***************************************************************************
