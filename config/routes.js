@@ -46,6 +46,13 @@ module.exports.routes = {
 	"POST /admin/staff/update" : "admin/staff.update",
 	"GET /admin/staff/:id/getDates" : "admin/staff.getDates",
 	"GET /admin/staff/search" : "admin/staff.search",
-	"GET /admin/staff/search/results" : "admin/staff.searchResults"
-
+	"GET /admin/staff/search/results" : "admin/staff.searchResults",
+	
+	// cities
+	"GET /admin/cities/index" : "admin/citiesController.index",
+	"GET /admin/cities/new" : "admin/citiesController.new",
+	"POST /admin/cities/create" : "admin/citiesController.create",
+	"GET /admin/cities/:id/edit" : "admin/citiesController.edit",
+	"POST /admin/cities/update" : "admin/cities.update",
+	"DELETE /admin/cities/:id" : "admin/cities.destroy"
 };

@@ -15,7 +15,7 @@ module.exports = {
 	},
 
 	"show" : function(req, res) {
-		
+
 		staff.find({
 			id : req.param("id")
 		}, function(error, user) {
@@ -80,18 +80,7 @@ module.exports = {
 	},
 
 	"edit" : function(req, res) {
-
 		sails.controllers["admin/staff"].show(req, res);
-
-		// staff.find({
-		// id : req.param("id")
-		// }, function(error, user) {
-		// if (error || user.length == 0 ) {
-		// res.view("errors/genericError", { err : error, message : "Cannot find that user." });
-		// } else {
-		// res.view({ member : user[0] });
-		// }
-		// });
 	},
 
 	"update" : function(req, res) {
@@ -126,7 +115,7 @@ module.exports = {
 				req.flash("errors", error);
 				res.redirect("/admin/staff/" + req.body.member_id + "/edit");
 			} else {
-				req.flash("success", "Staff member successfully updated.");
+				updated.length == 0 ? req.flash("success", "Nothing to update.") : req.flash("success", "Staff member successfully updated.")
 				res.redirect("/admin/staff/index");
 			}
 		});
@@ -181,28 +170,48 @@ module.exports = {
 	"search" : function(req, res) {
 		res.view();
 	},
-	
-	"searchResults" : function(req,res){
-		
+
+	"searchResults" : function(req, res) {
+
 		var searchString = req.query.query + "%";
-		
+
 		//eventually, optimize this query
-		staff.find({ $or : [ 
-			{ like : { firstName: searchString } }, 
-			{ like : { lastName : searchString } },
-			{ like : { email : searchString } }]}, { firstName : 1, lastName : 1, email: 1, isAdmin : 1 }, function(error, result){
-			
-			if (error || result.length == 0){
+		staff.find({
+			$or : [{
+				like : {
+					firstName : searchString
+				}
+			}, {
+				like : {
+					lastName : searchString
+				}
+			}, {
+				like : {
+					email : searchString
+				}
+			}]
+		}, {
+			firstName : 1,
+			lastName : 1,
+			email : 1,
+			isAdmin : 1
+		}, function(error, result) {
+
+			if (error || result.length == 0) {
 				res.json({
-					err : error, message : "Cannot find staff member.", success: false, 
+					err : error,
+					message : "Cannot find staff member.",
+					success : false,
 					status : 304 //(change status code)
 				});
-			} else{
+			} else {
 				res.json({
-					success: true, status : 200, members : result
+					success : true,
+					status : 200,
+					members : result
 				});
-			}			
-		});		
+			}
+		});
 	}
 };
 

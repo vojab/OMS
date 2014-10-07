@@ -1,0 +1,40 @@
+
+<div class="page-header">
+	<h2 style="padding-left: 2em;">Cities</h2>
+</div>
+
+<% if (cities.length > 0) {%>
+<div class="container">
+	<div class="row">
+		<div class="col-md-8 table-responsive">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% cities.forEach(function(city){ %>
+					<tr>
+						<td><%- city.cityName %></td>						
+						<td>
+							<%- link_to_if(true,"Edit", "/admin/cities/" + city.id + "/edit", {class: "btn btn-sm btn-warning"}) %>
+							<a id="deleteCity" data-member=<%=city.id %> class="btn btn-sm btn-danger">Delete</a>
+						</td>
+					</tr>
+					<% }); %>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<input id="csrf" type="hidden" name="_csrf" value="<%= _csrf %>" />
+</div>
+<% } else { %>
+<br/>
+<div class="container">
+	<div class="row">
+		<%- link_to_if(true, "Add city", "/admin/cities/new", {class: "btn btn-sm btn-success"}) %>
+	</div>
+</div>
+<% } %>
