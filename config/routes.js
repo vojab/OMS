@@ -32,13 +32,9 @@ module.exports.routes = {
 	 *                                                                          *
 	 ***************************************************************************/
 
-	'/' : {
-		view : 'index'
-	},
+	'/' : {	view : 'index' },
 
-	"/login" : {
-		view : "login"
-	},
+	"/login" : { view : "login"	},
 
 	// admin/staff
 	"GET /admin/staff/new" : { controller : "admin/staff", action : "new" },
