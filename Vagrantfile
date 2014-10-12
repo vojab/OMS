@@ -104,6 +104,7 @@ Vagrant.configure('2') do |config|
     ENV['VAGRANT_DEFAULT_PROVIDER'] = 'virtualbox'
 
     config.vm.provider :virtualbox do |virtualbox|
+	  config.ssh.pty= true
       data['vm']['provider']['virtualbox']['modifyvm'].each do |key, value|
         if key == 'memory'
           next
