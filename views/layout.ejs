@@ -43,7 +43,7 @@
 								<a class="" href="/">Home</a>
 							</li>
 							<li class="dropdown">
-								<a href="#" data-toggle="dropdown" class="dropdown-toggle">Staff <b class="caret"></b></a>
+								<a href="#" data-toggle="dropdown" class="dropdown-toggle">Staff<b class="caret"></b></a>
 								<ul class="dropdown-menu">
 									<li class="dropdown">
 										<a href="/admin/staff/index">All</a>
@@ -58,6 +58,22 @@
 									</li>
 								</ul>
 							</li>
+                            <li class="dropdown">
+                                <a href="#" data-toggle="dropdown" class="dropdown-toggle">Product<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown">
+                                        <a href="/admin/product/index">All</a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li class="dropdown">
+                                        <a href="/admin/product/new">New product</a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li class="dropdown">
+                                        <a href="/admin/product/search">Search product</a>
+                                    </li>
+                                </ul>
+                            </li>
 						</ul>
 						<% if (!req.session.current_user) { %>
 						<ul class="navbar-nav nav pull-right">

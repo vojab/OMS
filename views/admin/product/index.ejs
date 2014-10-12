@@ -1,0 +1,40 @@
+<% if (products.length > 0) {%>
+<div class="page-header">
+	<h2 style="padding-left: 2em;">Products</h2>
+</div>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-8 table-responsive">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Short Description</th>
+						<th>Price</th>
+						<th>Nutrition Details</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% products.forEach(function(product){ %>
+					<tr>
+						<td><%- link_to(product.name, "/admin/product/" + product.id + "/details") %></td>
+						<td><%= product.shortDescription %></td>
+						<td><%= product.price %></td>
+						<td> <%- link_to_if(true, "Edit", "/admin/product/" + product.id + "/edit", {class: "btn btn-sm btn-warning"}) %> <a id="deleteProduct" data-member=<%=product.id %> class="btn btn-sm btn-danger">Delete</a></td>
+					</tr>
+					<% }); %>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<input id="csrf" type="hidden" name="_csrf" value="<%= _csrf %>" />
+</div>
+<% } else { %>
+<br/>
+<div class="container">
+	<div class="row">
+		<%- link_to_if(true, "Add product", "/admin/product/new", {class: "btn btn-sm btn-success"}) %>
+	</div>
+</div>
+<% } %>

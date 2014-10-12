@@ -46,10 +46,21 @@ module.exports.routes = {
 	"GET /admin/staff/index" : "admin/staff.index",
 	"GET /admin/staff/:id/details" : "admin/staff.show",
 	"DELETE /admin/staff/:id" : "admin/staff.destroy",
-	"GET /admin/staff/:id/edit" : "admin/staff.edit", 
+	"GET /admin/staff/:id/edit" : "admin/staff.edit",
 	"POST /admin/staff/update" : "admin/staff.update",
 	"GET /admin/staff/:id/getDates" : "admin/staff.getDates",
 	"GET /admin/staff/search" : "admin/staff.search",
-	"GET /admin/staff/search/results" : "admin/staff.searchResults"
+	"GET /admin/staff/search/results" : "admin/staff.searchResults",
+
+    // admin/product
+    "GET /admin/product/new" : { controller : "admin/product", action : "new" },
+    "POST /admin/product/create" : "admin/productController.create",
+    "GET /admin/product/index" : "admin/product.index",
+    "GET /admin/product/:id/details" : "admin/product.show",
+    "DELETE /admin/product/:id" : "admin/product.destroy",
+    "GET /admin/product/:id/edit" : "admin/product.edit",
+    "POST /admin/product/update" : "admin/product.update",
+    "GET /admin/product/search" : "admin/product.search",
+    "GET /admin/product/search/results" : "admin/product.searchResults"
 
 };

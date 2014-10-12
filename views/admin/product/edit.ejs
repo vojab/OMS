@@ -1,0 +1,71 @@
+<div class="title">
+	<h2 class="form-signin-heading">Edit product :: <strong><%= product.name %></strong></h2>
+</div>
+<br/>
+
+<form action="/admin/product/update" method="POST" class="form-signin">
+
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+			<ul id="staffTab" class="nav nav-tabs">
+				<li class="active">
+					<a href="#basicInfo" data-toggle="tab">Basic Info</a>
+				</li>
+			</ul>
+
+			<div id="productTabContent" class="tab-content">
+
+				<div class="tab-pane fade active in" id="basicInfo">
+					<br/>
+
+					<div class="form-group col-sm-12">
+						<label for="name">Name:</label>
+						<%- text_field_tag("name", product.name, {class:"form-control", placeholder:"Product Name", name:"name"}) %>
+					</div>
+
+					<div class="form-group col-md-6 col-sm-6">
+						<label for="shortDescription">Short Description:</label>
+						<%- text_field_tag("shortDescription", product.shortDescription, {class:"form-control", placeholder:"Short Description", name:"shortDescription"}) %>
+					</div>
+
+					<div class="form-group col-md-6 col-sm-6">
+						<label for="longDescription">Long Description:</label>
+						<%- text_field_tag("longDescription", product.longDescription, {class:"form-control", placeholder:"Long Description", name:"longDescription"}) %>
+					</div>
+
+                    <div class="form-group col-md-6 col-sm-6">
+                        <label for="price">Price:</label>
+                        <%- text_field_tag("price", product.price, {class:"form-control", placeholder:"Price", name:"price"}) %>
+                    </div>
+
+                    <div class="form-group col-md-6 col-sm-6">
+                        <label for="nutritionDetails">Nutrition Details:</label>
+                        <%- text_field_tag("placeOfBirth", product.nutritionDetails, {class:"form-control", placeholder:"Nutrition Details", name:"nutritionDetails"}) %>
+                    </div>
+
+                    <div class="form-group col-md-6 col-sm-6">
+                        <label for="manufacturer">Manufacturer:</label>
+                        <%- text_field_tag("manufacturer", product.manufacturer, {class:"form-control", placeholder:"Manufacturer", name:"manufacturer"}) %>
+                    </div>
+
+					<div class="form-group col-md-6 col-sm-6">
+						<label for="expirationDate">Expiration Date:</label>
+						<input id="expirationDate" type="date" class="form-control" placeholder="Expiration Date (format: (YYYY-mm-dd)" name="expirationDate" />
+					</div>
+
+				</div>
+
+			</div>
+			<br/>
+			<br/>
+
+			<div class="form-group col-md-12 col-sm-12">
+				<input type="submit" class="btn btn-sm btn-success" value="Update member" />
+				<%- link_to_if(true, "Back", "/admin/product/index", {class: "btn btn-sm btn-primary"}) %>
+			</div>
+		</div>
+	</div>
+	<input id="csrf" type="hidden" name="_csrf" value="<%= _csrf %>" />
+	<%- hidden_field_tag("productId", product.id) %>
+
+</form>
