@@ -33,9 +33,9 @@ module.exports = {
 	},
 
 	"new" : function(req, res) {
-		
+
 		city.find({}, function(error, result) {
-			
+
 			if (error || result.length == 0) {
 				res.view("errors/genericError", {
 					err : error,
@@ -43,22 +43,11 @@ module.exports = {
 				});
 			} else {
 
-				var allCities = [{
-					value : 0,
-					text : ""
-				}];
-
-				result.forEach(function(item) {
-					var tempCity = {
-						value : item.id,
-						text : item.cityName
-					};
-
-					allCities.push(tempCity);
-				});
-
+				//this sucks... but for now, Waterline doesn't have a feature to select particullar fields from MongoDB
+				//although it can be "hacked" like in "searchResults" method..let's use this shitty approach, for now...
+				//more on this here: https://github.com/balderdashy/waterline/issues/73
 				res.view({
-					cities : allCities
+					cities : cityService.citiesDropDown(result)
 				});
 			}
 		});
@@ -197,50 +186,123 @@ module.exports = {
 	},
 
 	"search" : function(req, res) {
-		res.view();
+
+		city.find({}).exec(function(error, result) {
+
+			if (error || result.length == 0) {
+				res.view("errors/genericError", {
+					err : error,
+					message : "Cannot load cities."
+				});
+			} else {
+				res.view({
+					cities : cityService.citiesDropDown(result),
+					adminSelect : [{
+						value : 1,
+						text : "Yes"
+					}, {
+						value : 0,
+						text : "No"
+					}]
+				});
+			}
+		});
 	},
 
 	"searchResults" : function(req, res) {
 
-		var searchString = req.query.query + "%";
+		var searchParams = [];
+		searchParams.push(req.query.query);
 
-		//eventually, optimize this query
-		staff.find({
-			$or : [{
-				like : {
-					firstName : searchString
-				}
-			}, {
-				like : {
-					lastName : searchString
-				}
-			}, {
-				like : {
-					email : searchString
-				}
-			}]
-		}, {
-			firstName : 1,
-			lastName : 1,
-			email : 1,
-			isAdmin : 1
-		}, function(error, result) {
+		if (req.query.city)
+			searchParams.push(req.query.city);
 
-			if (error || result.length == 0) {
-				res.json({
-					err : error,
-					message : "Cannot find staff member.",
-					success : false,
-					status : 304 //(change status code)
-				});
-			} else {
-				res.json({
-					success : true,
-					status : 200,
-					members : result
-				});
-			}
-		});
+		if (req.query.admin) {
+			searchParams.push(req.query.admin == 0 ? false : true);
+		}
+
+		console.log("searchparams: ", searchParams);
+
+		if (searchParams.length > 1) {
+
+			staff.find().where({
+
+				//not sure if this is the right case...check this!!
+				city : searchParams[1],
+				isAdmin : searchParams[2],
+				or : [{
+					like : {
+						firstName : searchParams[0] + "%"
+					}
+				}, {
+					like : {
+						lastName : searchParams[0] + "%"
+					}
+				}, {
+					like : {
+						email : searchParams[0] + "%"
+					}
+				}]
+			}).exec(function(error, result) {
+				if (error || result.length == 0) {
+					res.json({
+						err : error,
+						message : "Cannot find staff member.",
+						success : false,
+						status : 304 //(change status code)
+					});
+				} else {
+					res.json({
+						success : true,
+						status : 200,
+						members : result
+					});
+				}
+			});
+		} else {
+
+			//var searchString = req.query.query + "%";
+
+			//eventually, optimize this query
+			staff.find({
+				$or : [{
+					like : {
+						firstName : searchParams[0] + "%"
+					}
+				}, {
+					like : {
+						lastName : searchParams[0] + "%"
+					}
+				}, {
+					like : {
+						email : searchParams[0] + "%"
+					}
+				}]
+			}, {
+				firstName : 1,
+				lastName : 1,
+				email : 1,
+				isAdmin : 1
+			}, function(error, result) {
+
+				if (error || result.length == 0) {
+					res.json({
+						err : error,
+						message : "Cannot find staff member.",
+						success : false,
+						status : 304 //(change status code)
+					});
+				} else {
+					res.json({
+						success : true,
+						status : 200,
+						members : result
+					});
+				}
+			});
+
+		}
+
 	}
 };
 
