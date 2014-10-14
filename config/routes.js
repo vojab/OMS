@@ -49,10 +49,10 @@ module.exports.routes = {
 	"GET /admin/staff/search/results" : "admin/staff.searchResults",
 	
 	// cities
-	"GET /admin/cities/index" : "admin/citiesController.index",
-	"GET /admin/cities/new" : "admin/citiesController.new",
-	"POST /admin/cities/create" : "admin/citiesController.create",
-	"GET /admin/cities/:id/edit" : "admin/citiesController.edit",
-	"POST /admin/cities/update" : "admin/cities.update",
-	"DELETE /admin/cities/:id" : "admin/cities.destroy"
+	"GET /cities/index" : "citiesController.index",
+	"GET /cities/new" : "citiesController.new",
+	"POST /cities/create" : "citiesController.create",
+	"GET /cities/:id/edit" : "citiesController.edit",
+	"POST /cities/update" : "cities.update",
+	"DELETE /cities/:id" : "cities.destroy"
 };

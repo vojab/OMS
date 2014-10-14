@@ -33,7 +33,36 @@ module.exports = {
 	},
 
 	"new" : function(req, res) {
-		res.view();
+		
+		city.find({}, function(error, result) {
+			
+			if (error || result.length == 0) {
+				res.view("errors/genericError", {
+					err : error,
+					message : "Cannot load cities."
+				});
+			} else {
+
+				var allCities = [{
+					value : 0,
+					text : ""
+				}];
+
+				result.forEach(function(item) {
+					var tempCity = {
+						value : item.id,
+						text : item.cityName
+					};
+
+					allCities.push(tempCity);
+				});
+
+				res.view({
+					cities : allCities
+				});
+			}
+		});
+
 	},
 
 	"create" : function(req, res) {

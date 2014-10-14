@@ -19,7 +19,7 @@
 					<tr>
 						<td><%- city.cityName %></td>						
 						<td>
-							<%- link_to_if(true,"Edit", "/admin/cities/" + city.id + "/edit", {class: "btn btn-sm btn-warning"}) %>
+							<%- link_to_if(true,"Edit", "/cities/" + city.id + "/edit", {class: "btn btn-sm btn-warning"}) %>
 							<a id="deleteCity" data-member=<%=city.id %> class="btn btn-sm btn-danger">Delete</a>
 						</td>
 					</tr>
@@ -34,7 +34,7 @@
 <br/>
 <div class="container">
 	<div class="row">
-		<%- link_to_if(true, "Add city", "/admin/cities/new", {class: "btn btn-sm btn-success"}) %>
+		<%- link_to_if(true, "Add city", "/cities/new", {class: "btn btn-sm btn-success"}) %>
 	</div>
 </div>
 <% } %>

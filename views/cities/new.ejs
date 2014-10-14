@@ -3,7 +3,7 @@
 </div>
 <br/>
 
-<form action="/admin/cities/create" method="POST" class="form-signin">
+<form action="/cities/create" method="POST" class="form-signin">
 
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2">
@@ -19,7 +19,7 @@
 
 			<div class="form-group col-md-12 col-sm-12">
 				<input type="submit" class="btn btn-sm btn-success" value="Create city" />
-				<%- link_to_if(true, "Back", "/admin/cities/index", {class: "btn btn-sm btn-primary"}) %>
+				<%- link_to_if(true, "Back", "/cities/index", {class: "btn btn-sm btn-primary"}) %>
 			</div>
 		</div>
 	</div>

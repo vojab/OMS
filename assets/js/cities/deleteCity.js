@@ -10,7 +10,7 @@ $(document).ready(function() {
 			var row = $(this).parent().parent();
 
 			$.ajax({
-				url : "/admin/cities/" + $(this).attr("data-member"),
+				url : "/cities/" + $(this).attr("data-member"),
 				type : "DELETE",
 				beforeSend : setHeader,
 				success : function(data, textStatus, jqXHR) {

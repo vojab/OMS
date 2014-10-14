@@ -26,10 +26,10 @@ module.exports = {
 		}).exec(function(error, user) {
 			if (error) {
 				req.flash("errors", error);
-				res.redirect("/admin/cities/new");
+				res.redirect("/cities/new");
 			} else {
 				req.flash("success", "City successfully created.");
-				res.redirect("/admin/cities/index");
+				res.redirect("/cities/index");
 			}
 		});
 	},
@@ -61,10 +61,10 @@ module.exports = {
 		}).exec(function(error, updated) {
 			if (error) {
 				req.flash("errors", error);
-				res.redirect("/admin/cities/" + req.body.city_id + "/edit");
+				res.redirect("/cities/" + req.body.city_id + "/edit");
 			} else {
 				updated.length == 0 ? req.flash("success", "Nothing to update.") : req.flash("success", "City info. successfully updated.")
-				res.redirect("/admin/cities/index");
+				res.redirect("/cities/index");
 			}
 		});
 	},

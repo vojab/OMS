@@ -15,6 +15,8 @@ $(document).ready(function() {
 				beforeSend : setHeader,
 				success : function(data, textStatus, jqXHR) {
 					row.remove();
+					$("#flash_messages").empty();
+					$("#flash_messages").append("<ul class='alert alert-success text-center' style='width:50em;'>" + "<li>Member successfully deleted.</li>" + "</ul");
 				},
 				error : function(jqXHR, textStatus, errorThrown) {
 					$("#flash_messages").empty();
