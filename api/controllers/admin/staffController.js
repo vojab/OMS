@@ -221,8 +221,6 @@ module.exports = {
 			searchParams.push(req.query.admin == 0 ? false : true);
 		}
 
-		console.log("searchparams: ", searchParams);
-
 		if (searchParams.length > 1) {
 
 			staff.find().where({
