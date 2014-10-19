@@ -16,7 +16,11 @@ module.exports = {
 		//contact
 		address : { type : "string" },
 		zipCode : { type : "integer", defaultsTo: 0 }, 
-		city : { type : "string" },
+		//city : { type : "string" }
+		city: {
+      model: "city"
+   },
+		
 		country : { type : "string" },
 		phoneNumber1 : { type : "string"},
 		phoneNumber2 : { type : "string"},

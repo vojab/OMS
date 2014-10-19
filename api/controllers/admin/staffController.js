@@ -2,13 +2,13 @@ module.exports = {
 
 	"index" : function(req, res) {
 
-		staff.find().where({}).exec(function(error, result) {
+		staff.find().exec(function(error, members) {
 			if (error) {
 				req.flash("errors", error);
 				return 0;
 			} else {
 				res.view({
-					staffMembers : result
+					staffMembers : members
 				});
 			}
 		});
@@ -18,15 +18,15 @@ module.exports = {
 
 		staff.find({
 			id : req.param("id")
-		}, function(error, user) {
-			if (error || user.length == 0) {
+		}).populate("city").exec(function(error, staffMember) {
+			if (error || staffMember.length == 0) {
 				res.view("errors/genericError", {
 					err : error,
-					message : "Cannot find that user."
+					message : "Cannot find member with id: " + req.param("id")
 				});
 			} else {
 				res.view({
-					member : user[0]
+					member : staffMember[0]
 				});
 			}
 		});
@@ -34,24 +34,16 @@ module.exports = {
 
 	"new" : function(req, res) {
 
-		city.find({}, function(error, result) {
-
-			if (error || result.length == 0) {
-				res.view("errors/genericError", {
-					err : error,
-					message : "Cannot load cities."
-				});
-			} else {
-
-				//this sucks... but for now, Waterline doesn't have a feature to select particullar fields from MongoDB
-				//although it can be "hacked" like in "searchResults" method..let's use this shitty approach, for now...
-				//more on this here: https://github.com/balderdashy/waterline/issues/73
-				res.view({
-					cities : cityService.citiesDropDown(result)
-				});
-			}
+		return cityService.getAllCitiesParsed().then(function(result) {			
+			res.view({
+				cities : result
+			});						
+		}, function(error) {			
+			res.view("errors/genericError", {
+				err : error,
+				message : "Cannot load cities."
+			});
 		});
-
 	},
 
 	"create" : function(req, res) {
@@ -84,7 +76,7 @@ module.exports = {
 			isAdmin : req.body.isAdmin != undefined,
 			hireDate : req.body.hireDate,
 			jobTitle : req.body.jobTitle,
-			salary : req.body.salary == "" ? 0 : req.body.salary //defaults_to not working at the moment (somekind of a bug in sails). maybe in next version?!
+			salary : req.body.salary == "" ? 0 : req.body.salary //defaultsTo not working at the moment (somekind of a bug in sails). maybe in next version?!
 
 		}).exec(function(error, user) {
 			if (error) {
@@ -98,7 +90,26 @@ module.exports = {
 	},
 
 	"edit" : function(req, res) {
-		sails.controllers["admin/staff"].show(req, res);
+		//sails.controllers["admin/staff"].show(req, res);
+		staff.find({
+			id : req.param("id")
+		}).populate("city").exec(function(error, memberArr) {
+
+			if (error || memberArr.length == 0) {
+				res.view("errors/genericError", {
+					err : error,
+					message : "Cannot find member with id: " + req.param("id")
+				});
+			} else {
+
+				var allCities = cityService.getAllCities()
+
+				res.view({
+					member : memberArr[0],
+					cities : cityService.citiesDropDown(result)
+				});
+			}
+		});
 	},
 
 	"update" : function(req, res) {

@@ -4,7 +4,13 @@ module.exports = {
 
 	attributes : {
 		
-		id : { type : "string", required : true, unique: true },
-		cityName: { type: "string", required : true }
+		id : { type : "string", required : true, unique: true, primaryKey: true },
+		cityName: { type: "string", required : true },
+		
+		staff: {
+      collection: "staff",
+      via: "city"
+    }
+		
 	}
 };

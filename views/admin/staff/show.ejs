@@ -62,12 +62,12 @@
 					</div>
 					<div class="form-group col-md-6 col-sm-6">
 						<label>Zip code:</label>
-						<%= member.zipCode %>
+						<%= member.zipCode != 0 ? member.zipCode : "" %>
 					</div>
 
 					<div class="form-group col-md-6 col-sm-6">
 						<label>City:</label>
-						<%= member.city %>
+						<%= member.city.cityName %>
 					</div>
 					<div class="form-group col-md-6 col-sm-6">
 						<label>Country:</label>
@@ -93,7 +93,7 @@
 					</div>
 					<div class="form-group col-md-6 col-sm-6">
 						<label>Salary:</label>
-						<%= member.salary %>
+						<%= member.salary != 0 ? member.salary : "not specified" %>
 					</div>
 					<div class="form-group col-md-6 col-sm-6">
 						<label>Is admin:</label>

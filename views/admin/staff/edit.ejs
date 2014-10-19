@@ -66,6 +66,7 @@
 					<div class="form-group col-md-6 col-sm-6">
 						<label for="city">City:</label>
 						<%- text_field_tag("city", member.city, {class:"form-control", placeholder:"City", name:"city"}) %>
+							<%- select_tag("city", cities, { style:"width:15em;" }) %>
 					</div>
 					<div class="form-group col-md-6 col-sm-6">
 						<label for="country">Country:</label>
