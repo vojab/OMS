@@ -34,11 +34,11 @@ module.exports = {
 
 	"new" : function(req, res) {
 
-		return cityService.getAllCitiesParsed().then(function(result) {			
+		return cityService.getAllCitiesParsed().then(function(result) {
 			res.view({
 				cities : result
-			});						
-		}, function(error) {			
+			});
+		}, function(error) {
 			res.view("errors/genericError", {
 				err : error,
 				message : "Cannot load cities."
@@ -90,7 +90,7 @@ module.exports = {
 	},
 
 	"edit" : function(req, res) {
-		//sails.controllers["admin/staff"].show(req, res);
+
 		staff.find({
 			id : req.param("id")
 		}).populate("city").exec(function(error, memberArr) {
@@ -102,11 +102,16 @@ module.exports = {
 				});
 			} else {
 
-				var allCities = cityService.getAllCities()
-
-				res.view({
-					member : memberArr[0],
-					cities : cityService.citiesDropDown(result)
+				return cityService.getAllCitiesParsed().then(function(result) {
+					res.view({
+						member : memberArr[0],
+						cities : result
+					});
+				}, function(error) {
+					res.view("errors/genericError", {
+						err : error,
+						message : "Cannot load cities."
+					});
 				});
 			}
 		});
@@ -173,7 +178,7 @@ module.exports = {
 		});
 	},
 
-	"getDates" : function(req, res) {
+	"getData" : function(req, res) {
 		staff.find({
 			id : req.param("id")
 		}, function(error, user) {
@@ -189,7 +194,8 @@ module.exports = {
 					success : true,
 					status : 200,
 					birthday : user[0].birthDate,
-					hireday : user[0].hireDate
+					hireday : user[0].hireDate,
+					city : user[0].city
 				});
 			}
 		});
@@ -198,25 +204,22 @@ module.exports = {
 
 	"search" : function(req, res) {
 
-		city.find({}).exec(function(error, result) {
-
-			if (error || result.length == 0) {
-				res.view("errors/genericError", {
-					err : error,
-					message : "Cannot load cities."
-				});
-			} else {
-				res.view({
-					cities : cityService.citiesDropDown(result),
-					adminSelect : [{
-						value : 1,
-						text : "Yes"
-					}, {
-						value : 0,
-						text : "No"
-					}]
-				});
-			}
+		return cityService.getAllCitiesParsed().then(function(result) {
+			res.view({
+				cities : result,
+				adminSelect : [{
+					value : 1,
+					text : "Yes"
+				}, {
+					value : 0,
+					text : "No"
+				}]
+			});
+		}, function(error) {
+			res.view("errors/genericError", {
+				err : error,
+				message : "Cannot load cities."
+			});
 		});
 	},
 
@@ -269,8 +272,6 @@ module.exports = {
 				}
 			});
 		} else {
-
-			//var searchString = req.query.query + "%";
 
 			//eventually, optimize this query
 			staff.find({

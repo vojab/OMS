@@ -44,7 +44,7 @@ module.exports.routes = {
 	"DELETE /admin/staff/:id" : "admin/staff.destroy",
 	"GET /admin/staff/:id/edit" : "admin/staff.edit", 
 	"POST /admin/staff/update" : "admin/staff.update",
-	"GET /admin/staff/:id/getDates" : "admin/staff.getDates",
+	"GET /admin/staff/:id/getData" : "admin/staff.getData",
 	"GET /admin/staff/search" : "admin/staff.search",
 	"GET /admin/staff/search/results" : "admin/staff.searchResults",
 	

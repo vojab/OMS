@@ -7,7 +7,9 @@ $(document).ready(function() {
 			var str = "";
 
 			arr.forEach(function(member) {
-				str = str + "<tr>" + "<td class='table_spacing'>" + member.firstName + " " + member.lastName + "</td>" + "<td class='table_spacing'>" + member.email + "</td>" + "<td class='table_spacing'>" + member.isAdmin + "</td>" + "</tr>";
+				
+				var isAdmin = member.isAdmin ? "Yes" : "No";
+				str = str + "<tr>" + "<td class='table_spacing'>" + member.firstName + " " + member.lastName + "</td>" + "<td class='table_spacing'>" + member.email + "</td>" + "<td class='table_spacing'>" + isAdmin + "</td>" + "</tr>";
 
 			});
 
