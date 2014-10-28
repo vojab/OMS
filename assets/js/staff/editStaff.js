@@ -11,6 +11,7 @@ $(document).ready(function() {
 				$("#DPbirthDate").datepicker("setDate", birthday);
 				$("#DPhireDate").datepicker("setDate", hireday);
 				$("#city").val(data.city);
+				$("#country").val(data.country);
 			},
 			error : function(jqXHR, textStatus, errorThrown) {
 				console.log("jqXHR", jqXHR);

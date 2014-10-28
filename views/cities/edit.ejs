@@ -3,13 +3,13 @@
 </div>
 <br/>
 
-<form action="/cities/update" method="POST" class="form-signin">
+<form action="/cities/update" method="POST" class="cities-form">
 
 	<div clas="row">
 		<div class="col-md-8 col-md-offset-2">
 			<div class="form-group col-sm-6">
 				<label for="cityName">Name:</label>
-				<%- text_field_tag("cityName", city.cityName, {class:"form-control", placeholder:"Email", name:"cityName"}) %>
+				<%- text_field_tag("cityName", city.cityName, {class:"form-control", name:"cityName"}) %>
 			</div>
 			<div class="form-group col-md-12 col-sm-12">
 				<input type="submit" class="btn btn-sm btn-success" value="Update city" />

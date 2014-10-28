@@ -10,14 +10,14 @@ module.exports = {
 			unique : true,
 			primaryKey : true
 		},
-		cityName : {
+		countryName : {
 			type : "string",
 			required : true
 		},
 
 		staff : {
 			collection : "staff",
-			via : "city"
+			via : "country"
 		}
 
 	}

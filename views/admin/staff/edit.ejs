@@ -69,7 +69,7 @@
 					</div>
 					<div class="form-group col-md-6 col-sm-6">
 						<label for="country">Country:</label>
-						<%- text_field_tag("country", member.country, {class:"form-control", placeholder:"Country", name:"country"}) %>
+						<%- select_tag("country", countries, { style:"width:15em;"}) %>
 					</div>
 
 					<div class="form-group col-md-6 col-sm-6">

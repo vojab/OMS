@@ -54,5 +54,13 @@ module.exports.routes = {
 	"POST /cities/create" : "citiesController.create",
 	"GET /cities/:id/edit" : "citiesController.edit",
 	"POST /cities/update" : "cities.update",
-	"DELETE /cities/:id" : "cities.destroy"
+	"DELETE /cities/:id" : "cities.destroy",
+	
+	//countries
+	"GET /countries/index" : "countriesController.index",
+	"GET /countries/new" : "countriesController.new",
+	"POST /countries/create" : "countriesController.create",
+	"GET /countries/:id/edit" : "countriesController.edit",
+	"POST /countries/update" : "countriesController.update",
+	"DELETE /countries/:id" : "countriesController.destroy"
 };

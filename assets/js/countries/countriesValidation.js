@@ -1,8 +1,8 @@
 $(document).ready(function() {
 
-	$(".cities-form").validate({		
+	$(".country-form").validate({		
 		rules : {
-			cityName : {
+			countryName : {
 				required : true
 			}
 		},

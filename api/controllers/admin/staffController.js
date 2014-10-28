@@ -18,7 +18,8 @@ module.exports = {
 
 		staff.find({
 			id : req.param("id")
-		}).populate("city").exec(function(error, staffMember) {
+		}).populate("city").populate("country").exec(function(error, staffMember) {
+
 			if (error || staffMember.length == 0) {
 				res.view("errors/genericError", {
 					err : error,
@@ -34,9 +35,17 @@ module.exports = {
 
 	"new" : function(req, res) {
 
-		return cityService.getAllCitiesParsed().then(function(result) {
-			res.view({
-				cities : result
+		return cityService.getAllCitiesParsed().then(function(citiesResult) {
+			return countryService.getCountriesParsed().then(function(countriesResult) {
+				res.view({
+					cities : citiesResult,
+					countries : countriesResult
+				});
+			}, function(error) {
+				res.view("errors/genericError", {
+					err : error,
+					message : "Cannot load countries."
+				});
 			});
 		}, function(error) {
 			res.view("errors/genericError", {
@@ -102,10 +111,18 @@ module.exports = {
 				});
 			} else {
 
-				return cityService.getAllCitiesParsed().then(function(result) {
-					res.view({
-						member : memberArr[0],
-						cities : result
+				return cityService.getAllCitiesParsed().then(function(citiesResult) {
+					return countryService.getCountriesParsed().then(function(countriesResult) {
+						res.view({
+							member : memberArr[0],
+							cities : citiesResult,
+							countries : countriesResult
+						});
+					}, function(error) {
+						res.view("errors/genericError", {
+							err : error,
+							message : "Cannot load countries."
+						});
 					});
 				}, function(error) {
 					res.view("errors/genericError", {
@@ -195,7 +212,8 @@ module.exports = {
 					status : 200,
 					birthday : user[0].birthDate,
 					hireday : user[0].hireDate,
-					city : user[0].city
+					city : user[0].city,
+					country : user[0].country
 				});
 			}
 		});
