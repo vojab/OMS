@@ -65,7 +65,7 @@ module.exports.connections = {
 		user : "admin",
 		password : "0101",
 		database : "oms_demo_db"
-	},
+	}
 
 	//use while testing locally => comment before pushing on remote branch!
 	// MongoDB_Server_local : {

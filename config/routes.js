@@ -61,6 +61,9 @@ module.exports.routes = {
     "GET /admin/product/:id/edit" : "admin/product.edit",
     "POST /admin/product/update" : "admin/product.update",
     "GET /admin/product/search" : "admin/product.search",
-    "GET /admin/product/search/results" : "admin/product.searchResults"
+    "GET /admin/product/search/results" : "admin/product.searchResults",
+
+    // admin/aws
+    "GET /admin/aws/index" : { controller : "admin/aws", action : "index" }
 
 };
