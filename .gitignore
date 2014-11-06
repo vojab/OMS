@@ -32,3 +32,4 @@ node_modules
 /puphpet/files
 
 /.idea
+/config/aws-credentials.json
