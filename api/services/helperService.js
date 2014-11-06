@@ -6,11 +6,16 @@ module.exports = {
 	// characters. Guess, that should be enough :-).
 	// We should make it a little bit robust and "complex", later, or smt.
 
-	createGUID : function() {
+	createGUID : function(shortGuid) {
 
 		var S4 = function() {
 			return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
 		};
+		
+		if (shortGuid){
+			var guid = S4().toLowerCase();
+			return guid;
+		}
 
 		//var guid = (S4() + S4() + "-" + S4() + "-4" + S4().substr(0, 3) + "-" + S4() + "-" + S4() + S4() + S4()).toLowerCase();
 		var guid = (S4() + S4()).toLowerCase();

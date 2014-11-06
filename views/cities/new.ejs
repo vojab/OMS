@@ -1,0 +1,28 @@
+<div class="title">
+	<h2 class="form-signin-heading">Add city</h2>
+</div>
+<br/>
+
+<form action="/cities/create" method="POST" class="form-signin">
+
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+
+			<div id="newCity">
+				<div class="form-group col-sm-12">
+					<label for="cityName">Name:</label>
+					<input id="cityName" type="text" class="form-control" placeholder="Name of the new city" name="cityName" />
+				</div>
+			</div>
+			<br/>
+			<br/>
+
+			<div class="form-group col-md-12 col-sm-12">
+				<input type="submit" class="btn btn-sm btn-success" value="Create city" />
+				<%- link_to_if(true, "Back", "/cities/index", {class: "btn btn-sm btn-primary"}) %>
+			</div>
+		</div>
+	</div>
+	<input id="csrf" type="hidden" name="_csrf" value="<%= _csrf %>" />
+
+</form>

@@ -2,38 +2,57 @@ module.exports = {
 
 	"index" : function(req, res) {
 
-		staff.find().where({}).exec(function(error, result) {
+		staff.find().exec(function(error, members) {
 			if (error) {
 				req.flash("errors", error);
 				return 0;
 			} else {
 				res.view({
-					staffMembers : result
+					staffMembers : members
 				});
 			}
 		});
 	},
 
 	"show" : function(req, res) {
-		
+
 		staff.find({
 			id : req.param("id")
-		}, function(error, user) {
-			if (error || user.length == 0) {
+		}).populate("city").populate("country").exec(function(error, staffMember) {
+
+			if (error || staffMember.length == 0) {
 				res.view("errors/genericError", {
 					err : error,
-					message : "Cannot find that user."
+					message : "Cannot find member with id: " + req.param("id")
 				});
 			} else {
 				res.view({
-					member : user[0]
+					member : staffMember[0]
 				});
 			}
 		});
 	},
 
 	"new" : function(req, res) {
-		res.view();
+
+		return cityService.getAllCitiesParsed().then(function(citiesResult) {
+			return countryService.getCountriesParsed().then(function(countriesResult) {
+				res.view({
+					cities : citiesResult,
+					countries : countriesResult
+				});
+			}, function(error) {
+				res.view("errors/genericError", {
+					err : error,
+					message : "Cannot load countries."
+				});
+			});
+		}, function(error) {
+			res.view("errors/genericError", {
+				err : error,
+				message : "Cannot load cities."
+			});
+		});
 	},
 
 	"create" : function(req, res) {
@@ -66,7 +85,7 @@ module.exports = {
 			isAdmin : req.body.isAdmin != undefined,
 			hireDate : req.body.hireDate,
 			jobTitle : req.body.jobTitle,
-			salary : req.body.salary == "" ? 0 : req.body.salary //defaults_to not working at the moment (somekind of a bug in sails). maybe in next version?!
+			salary : req.body.salary == "" ? 0 : req.body.salary //defaultsTo not working at the moment (somekind of a bug in sails). maybe in next version?!
 
 		}).exec(function(error, user) {
 			if (error) {
@@ -81,17 +100,38 @@ module.exports = {
 
 	"edit" : function(req, res) {
 
-		sails.controllers["admin/staff"].show(req, res);
+		staff.find({
+			id : req.param("id")
+		}).populate("city").exec(function(error, memberArr) {
 
-		// staff.find({
-		// id : req.param("id")
-		// }, function(error, user) {
-		// if (error || user.length == 0 ) {
-		// res.view("errors/genericError", { err : error, message : "Cannot find that user." });
-		// } else {
-		// res.view({ member : user[0] });
-		// }
-		// });
+			if (error || memberArr.length == 0) {
+				res.view("errors/genericError", {
+					err : error,
+					message : "Cannot find member with id: " + req.param("id")
+				});
+			} else {
+
+				return cityService.getAllCitiesParsed().then(function(citiesResult) {
+					return countryService.getCountriesParsed().then(function(countriesResult) {
+						res.view({
+							member : memberArr[0],
+							cities : citiesResult,
+							countries : countriesResult
+						});
+					}, function(error) {
+						res.view("errors/genericError", {
+							err : error,
+							message : "Cannot load countries."
+						});
+					});
+				}, function(error) {
+					res.view("errors/genericError", {
+						err : error,
+						message : "Cannot load cities."
+					});
+				});
+			}
+		});
 	},
 
 	"update" : function(req, res) {
@@ -126,7 +166,7 @@ module.exports = {
 				req.flash("errors", error);
 				res.redirect("/admin/staff/" + req.body.member_id + "/edit");
 			} else {
-				req.flash("success", "Staff member successfully updated.");
+				updated.length == 0 ? req.flash("success", "Nothing to update.") : req.flash("success", "Staff member successfully updated.")
 				res.redirect("/admin/staff/index");
 			}
 		});
@@ -155,7 +195,7 @@ module.exports = {
 		});
 	},
 
-	"getDates" : function(req, res) {
+	"getData" : function(req, res) {
 		staff.find({
 			id : req.param("id")
 		}, function(error, user) {
@@ -171,7 +211,9 @@ module.exports = {
 					success : true,
 					status : 200,
 					birthday : user[0].birthDate,
-					hireday : user[0].hireDate
+					hireday : user[0].hireDate,
+					city : user[0].city,
+					country : user[0].country
 				});
 			}
 		});
@@ -179,30 +221,116 @@ module.exports = {
 	},
 
 	"search" : function(req, res) {
-		res.view();
+
+		return cityService.getAllCitiesParsed().then(function(result) {
+			res.view({
+				cities : result,
+				adminSelect : [{
+					value : 1,
+					text : "Yes"
+				}, {
+					value : 0,
+					text : "No"
+				}]
+			});
+		}, function(error) {
+			res.view("errors/genericError", {
+				err : error,
+				message : "Cannot load cities."
+			});
+		});
 	},
-	
-	"searchResults" : function(req,res){
-		
-		var searchString = req.query.query + "%";
-		
-		//eventually, optimize this query
-		staff.find({ $or : [ 
-			{ like : { firstName: searchString } }, 
-			{ like : { lastName : searchString } },
-			{ like : { email : searchString } }]}, { firstName : 1, lastName : 1, email: 1, isAdmin : 1 }, function(error, result){
-			
-			if (error || result.length == 0){
-				res.json({
-					err : error, message : "Cannot find staff member.", success: false, 
-					status : 304 //(change status code)
-				});
-			} else{
-				res.json({
-					success: true, status : 200, members : result
-				});
-			}			
-		});		
+
+	"searchResults" : function(req, res) {
+
+		var searchParams = [];
+		searchParams.push(req.query.query);
+
+		if (req.query.city)
+			searchParams.push(req.query.city);
+
+		if (req.query.admin) {
+			searchParams.push(req.query.admin == 0 ? false : true);
+		}
+
+		if (searchParams.length > 1) {
+
+			staff.find().where({
+
+				//not sure if this is the right case...check this!!
+				city : searchParams[1],
+				isAdmin : searchParams[2],
+				or : [{
+					like : {
+						firstName : searchParams[0] + "%"
+					}
+				}, {
+					like : {
+						lastName : searchParams[0] + "%"
+					}
+				}, {
+					like : {
+						email : searchParams[0] + "%"
+					}
+				}]
+			}).exec(function(error, result) {
+				if (error || result.length == 0) {
+					res.json({
+						err : error,
+						message : "Cannot find staff member.",
+						success : false,
+						status : 304 //(change status code)
+					});
+				} else {
+					res.json({
+						success : true,
+						status : 200,
+						members : result
+					});
+				}
+			});
+		} else {
+
+			//eventually, optimize this query
+			staff.find({
+				$or : [{
+					like : {
+						firstName : searchParams[0] + "%"
+					}
+				}, {
+					like : {
+						lastName : searchParams[0] + "%"
+					}
+				}, {
+					like : {
+						email : searchParams[0] + "%"
+					}
+				}]
+			}, {
+				firstName : 1,
+				lastName : 1,
+				email : 1,
+				isAdmin : 1
+			}, function(error, result) {
+
+				if (error || result.length == 0) {
+					res.json({
+						err : error,
+						message : "Cannot find staff member.",
+						success : false,
+						status : 304 //(change status code)
+					});
+				} else {
+					res.json({
+						success : true,
+						status : 200,
+						members : result
+					});
+				}
+			});
+
+		}
+
 	}
 };
 

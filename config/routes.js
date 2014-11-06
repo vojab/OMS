@@ -32,13 +32,9 @@ module.exports.routes = {
 	 *                                                                          *
 	 ***************************************************************************/
 
-	'/' : {
-		view : 'index'
-	},
+	'/' : {	view : 'index' },
 
-	"/login" : {
-		view : "login"
-	},
+	"/login" : { view : "login"	},
 
 	// admin/staff
 	"GET /admin/staff/new" : { controller : "admin/staff", action : "new" },
@@ -48,8 +44,23 @@ module.exports.routes = {
 	"DELETE /admin/staff/:id" : "admin/staff.destroy",
 	"GET /admin/staff/:id/edit" : "admin/staff.edit", 
 	"POST /admin/staff/update" : "admin/staff.update",
-	"GET /admin/staff/:id/getDates" : "admin/staff.getDates",
+	"GET /admin/staff/:id/getData" : "admin/staff.getData",
 	"GET /admin/staff/search" : "admin/staff.search",
-	"GET /admin/staff/search/results" : "admin/staff.searchResults"
-
+	"GET /admin/staff/search/results" : "admin/staff.searchResults",
+	
+	// cities
+	"GET /cities/index" : "citiesController.index",
+	"GET /cities/new" : "citiesController.new",
+	"POST /cities/create" : "citiesController.create",
+	"GET /cities/:id/edit" : "citiesController.edit",
+	"POST /cities/update" : "cities.update",
+	"DELETE /cities/:id" : "cities.destroy",
+	
+	//countries
+	"GET /countries/index" : "countriesController.index",
+	"GET /countries/new" : "countriesController.new",
+	"POST /countries/create" : "countriesController.create",
+	"GET /countries/:id/edit" : "countriesController.edit",
+	"POST /countries/update" : "countriesController.update",
+	"DELETE /countries/:id" : "countriesController.destroy"
 };

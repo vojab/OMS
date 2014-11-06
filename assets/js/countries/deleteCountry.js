@@ -1,22 +1,25 @@
 $(document).ready(function() {
 
-	function setHeader(xhr) {		
-		xhr.setRequestHeader("X-CSRF-Token", $("#csrf").val());
-	}
+	if (window.location.href.contains("index") && window.location.href.contains("countries")) {
 
-	if (window.location.href.contains("index") && window.location.href.contains("staff")) {
+		function setHeader(xhr) {
+			xhr.setRequestHeader("X-CSRF-Token", $("#csrf").val());
+		}
+
+
 		$(".btn-danger").on("click", function() {
 
 			var row = $(this).parent().parent();
 
 			$.ajax({
-				url : "/admin/staff/" + $(this).attr("data-member"),
+				url : "/countries/" + $(this).attr("data-member"),
 				type : "DELETE",
 				beforeSend : setHeader,
 				success : function(data, textStatus, jqXHR) {
+					console.log("SUCCESS DATA", data);
 					row.remove();
 					$("#flash_messages").empty();
-					$("#flash_messages").append("<ul class='alert alert-success text-center' style='width:50em;'>" + "<li>Member successfully deleted.</li>" + "</ul");
+					$("#flash_messages").append("<ul class='alert alert-success text-center' style='width:50em;'>" + "<li>Country successfully deleted.</li>" + "</ul");
 				},
 				error : function(jqXHR, textStatus, errorThrown) {
 					$("#flash_messages").empty();
