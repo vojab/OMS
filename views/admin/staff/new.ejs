@@ -3,7 +3,7 @@
 </div>
 <br/>
 
-<form action="/admin/staff/create" method="POST" class="form-signin">
+<form action="/admin/staff/create?_csrf=<%=_csrf%>" method="POST" class="form-signin" enctype="multipart/form-data">
 
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2">
@@ -21,6 +21,7 @@
 
 			<div id="staffTabContent" class="tab-content">
 
+				<!-- BASIC INFO start -->
 				<div class="tab-pane fade active in" id="basicInfo">
 					<br/>
 
@@ -59,8 +60,21 @@
 						<input id="placeOfBirth" type="text" class="form-control" placeholder="Place of birth" name="placeOfBirth" />
 					</div>
 
-				</div>
+					<!-- image -->
+					<div class="form-group col-md-12 col-sm-12">
+						<label for="image">Choose image:</label>
+						<input id="image" type="file" class="btn btn-sm" name="image" accept="image/*" />
 
+						<div id="img_container">
+							<img id="img_preview" class="img-responsive center" src="" alt=""/>
+						</div>
+					</div>
+					<!-- image end -->
+
+				</div>
+				<!-- BASIC INFO end -->
+
+				<!-- CONTACT INFO start -->
 				<div class="tab-pane fade in" id="contactInfo">
 					<br/>
 
@@ -91,7 +105,9 @@
 						<input id="phoneNumber2" type="tel" pattern="^[0-9\-\+]{9,15}$" class="form-control" placeholder="Phone number 2" name="phoneNumber2" />
 					</div>
 				</div>
+				<!-- CONTACT INFO end -->
 
+				<!-- OTHER INFO start -->
 				<div class="tab-pane fade in" id="otherInfo">
 					<br/>
 
@@ -113,10 +129,8 @@
 						<input id="DPhireDate" type="date" class="form-control" placeholder="Hire date (format: YYYY-mm-dd)" name="hireDate" />
 					</div>
 				</div>
+				<!-- OTHER INFO end -->
 			</div>
-			<br/>
-			<br/>
-
 			<div class="form-group col-md-12 col-sm-12">
 				<input type="submit" class="btn btn-sm btn-success" value="Create member" />
 				<%- link_to_if(true, "Back", "/admin/staff/index", {class: "btn btn-sm btn-primary"}) %>

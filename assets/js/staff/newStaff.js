@@ -1,5 +1,15 @@
 $(document).ready(function() {
 
+	function previewImage(image) {
+		if (image.files && image.files[0]) {
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				$('#img_preview').attr('src', e.target.result);
+			};
+			reader.readAsDataURL(image.files[0]);
+		}
+	}
+
 	$("#DPbirthDate").datepicker({
 		dateFormat : "yy-mm-dd",
 		changeMonth : true,
@@ -18,6 +28,9 @@ $(document).ready(function() {
 			$("#DPhireDate").valid();
 		}
 	});
-	
+
+	$("#image").on("change", function() {
+		previewImage(this);
+	});
 
 });

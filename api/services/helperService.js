@@ -21,32 +21,6 @@ module.exports = {
 		var guid = (S4() + S4()).toLowerCase();
 		return guid;
 
-	},
-	
-	uploadImage: function(image, fileName) {
-
-        var AWS = require('aws-sdk');
-
-        AWS.config.loadFromPath('./config/aws-credentials.json');
-
-        var s3Bucket = new AWS.S3( { params: { Bucket: 'omsimages' } } );
-
-		if (image) {
-			var data = {Key: fileName, Body: image};
-			s3Bucket.putObject(data, function(err, data){
-				if (err) {
-					// TODO: Return jSend response
-					console.log('Error uploading data: ', err);
-				} else {
-					// TODO: Return jSend response
-					console.log('Successfully uploaded the image!');
-				}
-			});
-		} else {
-			// TODO: Return jSend response
-			console.log('File not found!');
-		}
-
-    }
+	}
 	
 };

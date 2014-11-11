@@ -1,3 +1,5 @@
+var awsConfig = sails.config.awsConfig;
+
 module.exports = {
 
 	"index" : function(req, res) {
@@ -57,45 +59,63 @@ module.exports = {
 
 	"create" : function(req, res) {
 
+		//console.log("\nparams ", req.params.all());
+
 		if (req.body.password != req.body.passwordConfirmation) {
 			req.flash("errors", "Password doesn't match Password Confirmation.");
 			res.redirect("admin/staff/new");
+		} else {
+			req.file("image").upload({
+				adapter : require("skipper-s3"),
+				key : awsConfig.APIkeys.accessKeyId,
+				secret : awsConfig.APIkeys.secretAccessKey,
+				bucket : awsConfig.s3.bucket,
+				region : awsConfig.s3.region
+			}, function uploadFinished(error, uploaded) {
+
+				if (error) {
+					req.flash("errors", error);
+					res.redirect("admin/staff/new");
+				} else {
+					
+					console.log("UPLOAD SUCCESSED: ", uploaded);
+
+					staff.create({
+						//basic info
+						id : helperService.createGUID(),
+						firstName : req.body.firstName,
+						lastName : req.body.lastName,
+						email : req.body.email,
+						encryptedPassword : req.body.password,
+						birthDate : req.body.birthDate,
+						placeOfBirth : req.body.placeOfBirth,
+
+						//contact info
+						address : req.body.address,
+						zipCode : req.body.zipCode == "" ? 0 : req.body.zipCode,
+						city : req.body.city,
+						country : req.body.country,
+						phoneNumber1 : req.body.phoneNumber1,
+						phoneNumber2 : req.body.phoneNumber2,
+
+						//other info
+						isAdmin : req.body.isAdmin != undefined,
+						hireDate : req.body.hireDate,
+						jobTitle : req.body.jobTitle,
+						salary : req.body.salary == "" ? 0 : req.body.salary //defaultsTo not working at the moment (somekind of a bug in sails). maybe in next version?!
+
+					}).exec(function(error, user) {
+						if (error) {
+							req.flash("errors", error);
+							res.redirect("/admin/staff/new");
+						} else {
+							req.flash("success", "Staff member successfully created.");
+							res.redirect("/admin/staff/index");
+						}
+					});
+				}
+			});
 		}
-
-		staff.create({
-
-			//basic info
-			id : helperService.createGUID(),
-			firstName : req.body.firstName,
-			lastName : req.body.lastName,
-			email : req.body.email,
-			encryptedPassword : req.body.password,
-			birthDate : req.body.birthDate,
-			placeOfBirth : req.body.placeOfBirth,
-
-			//contact info
-			address : req.body.address,
-			zipCode : req.body.zipCode == "" ? 0 : req.body.zipCode,
-			city : req.body.city,
-			country : req.body.country,
-			phoneNumber1 : req.body.phoneNumber1,
-			phoneNumber2 : req.body.phoneNumber2,
-
-			//other info
-			isAdmin : req.body.isAdmin != undefined,
-			hireDate : req.body.hireDate,
-			jobTitle : req.body.jobTitle,
-			salary : req.body.salary == "" ? 0 : req.body.salary //defaultsTo not working at the moment (somekind of a bug in sails). maybe in next version?!
-
-		}).exec(function(error, user) {
-			if (error) {
-				req.flash("errors", error);
-				res.redirect("/admin/staff/new");
-			} else {
-				req.flash("success", "Staff member successfully created.");
-				res.redirect("/admin/staff/index");
-			}
-		});
 	},
 
 	"edit" : function(req, res) {
