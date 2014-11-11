@@ -32,4 +32,7 @@ node_modules
 /puphpet/files
 
 /.idea
+
+#AWS_credentials
 /config/aws-credentials.json
+/config/awsConfig.js
