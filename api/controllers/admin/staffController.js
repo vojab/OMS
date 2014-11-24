@@ -66,7 +66,7 @@ module.exports = {
 			isAdmin : req.body.isAdmin != undefined,
 			hireDate : req.body.hireDate,
 			jobTitle : req.body.jobTitle,
-			salary : req.body.salary == "" ? 0 : req.body.salary //defaults_to not working at the moment (somekind of a bug in sails). maybe in next version?!
+			salary : req.body.salary == "" ? 0 : req.body.salary //defaults_to not working at the moment (some kind of a bug in sails). maybe in next version?!
 
 		}).exec(function(error, user) {
 			if (error) {

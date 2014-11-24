@@ -17,7 +17,8 @@ module.exports = {
 		return guid;
 
 	},
-	
+
+    // TODO: return jSend message format
 	uploadImage: function(image, fileName) {
 
         var AWS = require('aws-sdk');
@@ -30,16 +31,16 @@ module.exports = {
 			var data = {Key: fileName, Body: image};
 			s3Bucket.putObject(data, function(err, data){
 				if (err) {
-					// TODO: Return jSend response
-					console.log('Error uploading data: ', err);
+					//console.log('Error uploading data: ', err);
+                    return {status: "error", message: "Error uploading data: " + err};
 				} else {
-					// TODO: Return jSend response
-					console.log('Successfully uploaded the image!');
+					//console.log('Successfully uploaded the image!');
+                    return {status: "success", message: "Successfully uploaded the image!"};
 				}
 			});
 		} else {
-			// TODO: Return jSend response
-			console.log('File not found!');
+			//console.log('File not found!');
+            return {status: "error", message: "File not found!"};
 		}
 
     }

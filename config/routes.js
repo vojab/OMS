@@ -42,6 +42,7 @@ module.exports.routes = {
 
     // admin/aws
     "GET /aws/index" : { controller : "aws", action : "index" },
+    "GET /aws/upload" : { controller : "aws", action : "upload" },
 
 	// admin/staff
 	"GET /admin/staff/new" : { controller : "admin/staff", action : "new" },

@@ -1,5 +1,11 @@
-<div class="row">
+<div class="container row">
     <div class="col-lg-12">
-        <p>AWS S3 Image Upload</p>
+        <form action="/aws/upload" method="post" enctype="multipart/form-data" class="" id="upload">
+            <p>AWS S3 Image Upload</p>
+            <input type="file" name="image"/>
+            <hr/>
+            <input id="csrf" type="hidden" name="_csrf" value="<%= _csrf %>" />
+            <%- link_to_if(true, "UPLOAD", "/aws/upload", {class: "btn btn-sm btn-primary"}) %>
+        </form>
     </div>
 </div>
