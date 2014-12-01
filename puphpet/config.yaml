@@ -10,10 +10,10 @@ vagrantfile-local:
         network:
             private_network: 192.168.56.101
             forwarded_port:
-                xeV7dH5VFMOh:
+                3sNse4tXbfZU:
                     host: '5681'
                     guest: '22'
-                cGu8SKW04VQk:
+                71AkAal3tUbV:
                     host: '1338'
                     guest: '1337'
         post_up_message: ''
@@ -35,7 +35,9 @@ vagrantfile-local:
                     - '--hiera_config /vagrant/puphpet/puppet/hiera.yaml'
                     - '--parser future'
         synced_folder:
-            pluggCczeuxo:
+            92pfkHP4vhXZ:
+                owner: ''
+                group: ''
                 source: ./
                 target: /var/www
                 sync_type: default
@@ -46,7 +48,10 @@ vagrantfile-local:
                         - '-z'
                     exclude:
                         - .vagrant/
-                    auto: 'false'
+                        - .tmp/
+                        - .idea/
+                        - .git/
+                    auto: 'true'
         usable_port_range:
             start: 10200
             stop: 10500
@@ -130,13 +135,16 @@ xdebug:
         xdebug.remote_port: '9000'
 xhprof:
     install: '0'
+wpcli:
+    install: '0'
+    version: ''
 drush:
     install: '0'
     version: 6.3.0
 ruby:
     install: '1'
     versions:
-        HcBPiVbU33LN:
+        foMiF4gAUUJA:
             version: ''
 nodejs:
     install: '1'
@@ -145,14 +153,15 @@ python:
     install: '1'
     packages: {  }
     versions:
-        4ieTKhTt5tPm:
+        K5CtvBjLTObp:
             version: ''
 mysql:
     install: '0'
+    override_options: {  }
     root_password: '123'
     adminer: 0
     databases:
-        mEUedXow2i9Y:
+        W5VezkbNMxSF:
             grant:
                 - ALL
             name: dbname
@@ -171,6 +180,7 @@ postgresql:
     adminer: 0
 mariadb:
     install: '0'
+    override_options: {  }
     root_password: '123'
     adminer: 0
     databases: {  }

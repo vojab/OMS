@@ -169,6 +169,7 @@ define nginx_vhost (
   $rewrite_to_https = false,
   $spdy             = $nginx::params::nx_spdy,
   $engine           = false,
+  $proxy            = undef,
 ){
   $merged_server_name = concat([$server_name], $server_aliases)
 
@@ -210,10 +211,10 @@ define nginx_vhost (
 
   nginx::resource::vhost { $server_name:
     server_name      => $merged_server_name,
-    www_root         => $www_root,
     listen_port      => $listen_port,
     index_files      => $index_files,
     try_files        => ['$uri', '$uri/', "${try_files}"],
+    proxy            => $proxy,
     ssl              => $ssl_set,
     ssl_cert         => $ssl_cert_set,
     ssl_key          => $ssl_key_set,

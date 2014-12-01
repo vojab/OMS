@@ -1,0 +1,6 @@
+views/*
+.vagrant/*
+.tmp/*
+.git/*
+.idea/*
+node_modules/*

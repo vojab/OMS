@@ -1,0 +1,6 @@
+**/.tmp/**
+**/.git/**
+**/.vagrant/**
+**/.idea/**
+**/views/**
+**/assets/**
